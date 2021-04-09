@@ -35,6 +35,7 @@ function TodoCardPresentational(props) {
   return (
     <Card className={props.viewState} onDoubleClickCapture={props.handleDoubleClickCapture}>
       <Title
+        ref={props.titleRef}
         onChange={props.handleChangeTitle}
         spellCheck={false}
         autoFocus={true}

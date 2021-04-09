@@ -1,23 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { TodoCardViewState } from './const.js';
 import TodoCardPresentational from './TodoCardPresentational.js';
 
 function TodoCardContainer(props) {
   const [viewState, setViewState] = useState(props.viewState);
   const [state, setState] = useState(props.state);
+  const titleRef = useRef();
 
   useEffect(() => {
     // TODO
     console.log('call useEffect');
   }, [state]);
 
+  useEffect(() => {
+    if (viewState === TodoCardViewState.EDIT)
+      titleRef.current.focus();
+  }, [viewState]);
+
   const handleDoubleClickCapture = (evt) => {
     evt.stopPropagation();
     evt.preventDefault();
     setViewState(TodoCardViewState.EDIT);
-
-    evt.target.focus();
   };
+
+  const handleFocus = (evt) => {
+    
+  }
 
   const handleChangeTitle = ({ target }) => {
     setState({ ...state, title: target.value });
@@ -55,6 +63,7 @@ function TodoCardContainer(props) {
 
   return (
     <TodoCardPresentational
+      titleRef={titleRef}
       handleDoubleClickCapture={handleDoubleClickCapture}
       handleChangeTitle={handleChangeTitle}
       handleChangeContent={handleChangeContent}
