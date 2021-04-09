@@ -11,49 +11,58 @@ function TodoCardContainer(props) {
     console.log('call useEffect');
   }, [state]);
 
-  const onDoubleClickCapture = (evt) => {
+  const handleDoubleClickCapture = (evt) => {
     evt.stopPropagation();
     evt.preventDefault();
     setViewState(TodoCardViewState.EDIT);
 
     evt.target.focus();
-    // target.focus();
   };
 
-  const onChangeTitle = ({ target }) => {
+  const handleChangeTitle = ({ target }) => {
     setState({ ...state, title: target.value });
   };
 
-  const onChangeContent = ({ target }) => {
+  const handleChangeContent = ({ target }) => {
     if (target.clientHeight < target.scrollHeight)
       target.style.height = `${target.scrollHeight + 4}px`;
 
     setState({ ...state, content: target.value });
   };
 
-  const onClickCancelBtn = ({ target }) => {
+  const handleClickCancelBtn = ({ target }) => {
     // TODO: delete logic
     setViewState(TodoCardViewState.NORMAL);
   };
 
-  const onClickConfirmBtn = ({ target }) => {
+  const handleClickConfirmBtn = ({ target }) => {
     // TODO: network logic
-    console.log('click confirmBtn');
+    setViewState(TodoCardViewState.NORMAL);
   };
 
-  const onClickDeleteBtn = ({ target }) => {
+  const handleClickDeleteBtn = ({ target }) => {
     // TODO
     console.log('click deleteBtn');
   };
 
+  const handleMouseOverDeleteBtn = ({ target }) => {
+    setViewState(TodoCardViewState.DELETE);
+  }
+
+  const handleMouseLeaveDeleteBtn = ({ target }) => {
+    setViewState(TodoCardViewState.NORMAL);
+  }
+
   return (
     <TodoCardPresentational
-      onDoubleClickCapture={onDoubleClickCapture}
-      onChangeTitle={onChangeTitle}
-      onChangeContent={onChangeContent}
-      onClickCancelBtn={onClickCancelBtn}
-      onClickConfirmBtn={onClickConfirmBtn}
-      onClickDeleteBtn={onClickDeleteBtn}
+      handleDoubleClickCapture={handleDoubleClickCapture}
+      handleChangeTitle={handleChangeTitle}
+      handleChangeContent={handleChangeContent}
+      handleClickCancelBtn={handleClickCancelBtn}
+      handleClickConfirmBtn={handleClickConfirmBtn}
+      handleClickDeleteBtn={handleClickDeleteBtn}
+      handleMouseOverDeleteBtn={handleMouseOverDeleteBtn}
+      handleMouseLeaveDeleteBtn={handleMouseLeaveDeleteBtn}
       state={state}
       viewState={viewState}
     />
