@@ -4,20 +4,13 @@ import { TodoCardViewState } from './const.js';
 import TodoCardPresentational from './TodoCardPresentational.js';
 
 function TodoCardContainer(props) {
-  const _initialState = {
-    todoId: '',
-    author: '',
-    title: '',
-    content: '',
-    createDate: null,
-    updateDate: null,
-  };
-
-  const [state, setState] = useState(props.state ?? _initialState);
+  const [state, setState] = useState(props.state);
   const [viewState, setViewState] = useState(props.viewState);
-  const [$currFocus, setCurrFocus] = useState();
+  const [$currFocus, setCurrFocus] = useState(); // is this right convention?
   const titleRef = useRef();
   const contentRef = useRef();
+  const [initialTitle] = useState(state.title);
+  const [initialContent] = useState(state.content);
 
   useEffect(() => {
     if (viewState === TodoCardViewState.EDIT && $currFocus) {
@@ -28,7 +21,7 @@ function TodoCardContainer(props) {
 
   useEffect(() => {
     _resizeContentHeight();
-  }, [state]);
+  }, [titleRef, contentRef]);
 
   const _cursorToEnd = ($input) => {
     $input.selectionEnd = $input.selectionEnd + $input.value.length;
@@ -59,32 +52,36 @@ function TodoCardContainer(props) {
   };
 
   const handleChangeContent = ({ target }) => {
-//    if (target.clientHeight < target.scrollHeight)
-//      _resizeContentHeight(target);
-
     setState({ ...state, content: target.value });
   };
 
-  const handleClickCancelBtn = ({ target }) => {
-    // TODO: delete logic
+  const handleClickCancelBtn = () => {
+    setViewState(TodoCardViewState.NORMAL);
+
+    if (state.id)
+      setState({ ...state, title: initialTitle, content: initialContent });
+    else
+      props.deleteTodo(state.id);
+      
+    // TODO: PopupMessage
+  };
+
+  const handleClickConfirmBtn = () => {
+    // TODO: data arrangement, network logic
     setViewState(TodoCardViewState.NORMAL);
   };
 
-  const handleClickConfirmBtn = ({ target }) => {
+  const handleClickDeleteBtn = () => {
     // TODO: network logic
-    setViewState(TodoCardViewState.NORMAL);
+    props.deleteTodo(state.id);
+    // TODO: PopupMessage
   };
 
-  const handleClickDeleteBtn = ({ target }) => {
-    // TODO
-    console.log('click deleteBtn');
-  };
-
-  const handleMouseOverDeleteBtn = ({ target }) => {
+  const handleMouseOverDeleteBtn = () => {
     setViewState(TodoCardViewState.DELETE);
   }
 
-  const handleMouseLeaveDeleteBtn = ({ target }) => {
+  const handleMouseLeaveDeleteBtn = () => {
     setViewState(TodoCardViewState.NORMAL);
   }
 

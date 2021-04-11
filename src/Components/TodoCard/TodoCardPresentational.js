@@ -9,6 +9,7 @@ function TodoCardPresentational(props) {
       <div>
         <Caption>{`${props.state.author} by web`}</Caption>
         <DeleteBtn
+          onClick={props.handleClickDeleteBtn}
           onMouseOver={props.handleMouseOverDeleteBtn}
           onMouseLeave={props.handleMouseLeaveDeleteBtn}>
             X
