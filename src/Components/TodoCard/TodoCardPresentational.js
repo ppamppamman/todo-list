@@ -108,7 +108,7 @@ const Title = styled.input`
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
-  line-height: 23px;
+  line-height: 25px;
   color: #010101;
   margin-bottom: 8px;
   border: none;
