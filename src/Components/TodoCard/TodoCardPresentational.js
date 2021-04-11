@@ -7,8 +7,13 @@ function TodoCardPresentational(props) {
     // TODO, FIXME
     return (
       <div>
-        <Caption>TMP: Neis by web</Caption>
-        <DeleteBtn>X</DeleteBtn>
+        <Caption>{`${props.state.author} by web`}</Caption>
+        <DeleteBtn
+          onClick={props.handleClickDeleteBtn}
+          onMouseOver={props.handleMouseOverDeleteBtn}
+          onMouseLeave={props.handleMouseLeaveDeleteBtn}>
+            X
+        </DeleteBtn>
       </div>
     );
   }
@@ -16,9 +21,9 @@ function TodoCardPresentational(props) {
   const renderEdit = () => {
     return (
       <div>
-        <CancelBtn onClick={props.onClickCancelBtn}>취소</CancelBtn>
+        <CancelBtn onClick={props.handleClickCancelBtn}>취소</CancelBtn>
         <ConfirmBtn
-          onClick={props.onClickConfirmBtn}
+          onClick={props.handleClickConfirmBtn}
           disabled={props.state.title.length > 0 && props.state.content.length > 0 ? false : true}>
             확인
         </ConfirmBtn>
@@ -29,16 +34,18 @@ function TodoCardPresentational(props) {
   const isEditMode = () => props.viewState === TodoCardViewState.EDIT;
 
   return (
-    <Card className={props.viewState} onDoubleClickCapture={props.onDoubleClickCapture}>
+    <Card className={props.viewState} onDoubleClickCapture={props.handleDoubleClickCapture}>
       <Title
-        onChange={props.onChangeTitle}
+        ref={props.titleRef}
+        onChange={props.handleChangeTitle}
         spellCheck={false}
         autoFocus={true}
         placeholder="제목을 입력하세요"
         value={props.state.title}
         disabled={isEditMode() ? false : true} />
       <Content
-        onChange={props.onChangeContent}
+        ref={props.contentRef}
+        onChange={props.handleChangeContent}
         spellCheck={false}
         maxlength="500"
         placeholder="내용을 입력하세요"
@@ -55,7 +62,6 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px;
-  width: 310px;
   height: auto;
   position: relative;
   box-sizing: border-box;
@@ -65,7 +71,7 @@ const Card = styled.div`
   margin-top: 10px;
   user-select: none;
 
-  &:not(.edit):hover {
+  &:not(.edit, .delete):hover {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
@@ -79,7 +85,10 @@ const Card = styled.div`
   }
 
   &.delete {
-    // TODO
+    padding: 15px;
+    background-color: #FFEEEC;
+    border: 1px solid #FF4343;
+    box-shadow: 0px 1px 30px rgba(224, 224, 224, 0.3);
   }
 
   &.drag-float {
@@ -108,6 +117,10 @@ const Title = styled.input`
 
   &:disabled {
     pointer-events: none;
+
+    &::selection {
+      background: transparent;
+    }
   }
 `;
 
@@ -129,9 +142,12 @@ const Content = styled.textarea`
 
   &:disabled {
     pointer-events: none;
+
+    &::selection {
+      background: transparent;
+    }
   }
 `;
-
 
 const CancelBtn = styled.button`
   float: left;
@@ -193,6 +209,8 @@ const DeleteBtn = styled.button`
   color: #828282; 
 
   &:hover {
+    top: 15px;
+    right: 15px;
     /* background: #FF4343; */
     color: #FF4343; // FIXME: delete
   }

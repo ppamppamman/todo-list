@@ -1,59 +1,102 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import Global from '../../global.js';
 import { TodoCardViewState } from './const.js';
 import TodoCardPresentational from './TodoCardPresentational.js';
 
 function TodoCardContainer(props) {
-  const [viewState, setViewState] = useState(props.viewState);
   const [state, setState] = useState(props.state);
+  const [viewState, setViewState] = useState(props.viewState);
+  const [$currFocus, setCurrFocus] = useState(); // is this right convention?
+  const titleRef = useRef();
+  const contentRef = useRef();
+  const [initialTitle] = useState(state.title);
+  const [initialContent] = useState(state.content);
 
   useEffect(() => {
-    // TODO
-    console.log('call useEffect');
-  }, [state]);
+    if (viewState === TodoCardViewState.EDIT && $currFocus) {
+      $currFocus.focus();
+      _cursorToEnd($currFocus);
+    }
+  }, [viewState]);
 
-  const onDoubleClickCapture = (evt) => {
+  useEffect(() => {
+    _resizeContentHeight();
+  }, [titleRef, contentRef]);
+
+  const _cursorToEnd = ($input) => {
+    $input.selectionEnd = $input.selectionEnd + $input.value.length;
+    $input.selectionStart = $input.selectionEnd;
+  }
+
+  const _resizeContentHeight = () => {
+    if (contentRef.current.clientHeight < contentRef.current.scrollHeight)
+      contentRef.current.style.height = `${contentRef.current.scrollHeight + 4}px`;
+  }
+
+  const handleDoubleClickCapture = (evt) => {
+    if (viewState === TodoCardViewState.EDIT)
+      return;
+
     evt.stopPropagation();
     evt.preventDefault();
     setViewState(TodoCardViewState.EDIT);
-
-    evt.target.focus();
-    // target.focus();
+    
+    if (evt.nativeEvent.layerY >= contentRef.current.offsetTop)
+      setCurrFocus(contentRef.current);
+    else
+      setCurrFocus(titleRef.current);
   };
 
-  const onChangeTitle = ({ target }) => {
+  const handleChangeTitle = ({ target }) => {
     setState({ ...state, title: target.value });
   };
 
-  const onChangeContent = ({ target }) => {
-    if (target.clientHeight < target.scrollHeight)
-      target.style.height = `${target.scrollHeight + 4}px`;
-
+  const handleChangeContent = ({ target }) => {
     setState({ ...state, content: target.value });
   };
 
-  const onClickCancelBtn = ({ target }) => {
-    // TODO: delete logic
+  const handleClickCancelBtn = () => {
+    setViewState(TodoCardViewState.NORMAL);
+
+    if (state.id)
+      setState({ ...state, title: initialTitle, content: initialContent });
+    else
+      props.deleteTodo(state.id);
+      
+    // TODO: PopupMessage
+  };
+
+  const handleClickConfirmBtn = () => {
+    // TODO: data arrangement, network logic
     setViewState(TodoCardViewState.NORMAL);
   };
 
-  const onClickConfirmBtn = ({ target }) => {
+  const handleClickDeleteBtn = () => {
     // TODO: network logic
-    console.log('click confirmBtn');
+    props.deleteTodo(state.id);
+    // TODO: PopupMessage
   };
 
-  const onClickDeleteBtn = ({ target }) => {
-    // TODO
-    console.log('click deleteBtn');
-  };
+  const handleMouseOverDeleteBtn = () => {
+    setViewState(TodoCardViewState.DELETE);
+  }
+
+  const handleMouseLeaveDeleteBtn = () => {
+    setViewState(TodoCardViewState.NORMAL);
+  }
 
   return (
     <TodoCardPresentational
-      onDoubleClickCapture={onDoubleClickCapture}
-      onChangeTitle={onChangeTitle}
-      onChangeContent={onChangeContent}
-      onClickCancelBtn={onClickCancelBtn}
-      onClickConfirmBtn={onClickConfirmBtn}
-      onClickDeleteBtn={onClickDeleteBtn}
+      titleRef={titleRef}
+      contentRef = {contentRef}
+      handleDoubleClickCapture={handleDoubleClickCapture}
+      handleChangeTitle={handleChangeTitle}
+      handleChangeContent={handleChangeContent}
+      handleClickCancelBtn={handleClickCancelBtn}
+      handleClickConfirmBtn={handleClickConfirmBtn}
+      handleClickDeleteBtn={handleClickDeleteBtn}
+      handleMouseOverDeleteBtn={handleMouseOverDeleteBtn}
+      handleMouseLeaveDeleteBtn={handleMouseLeaveDeleteBtn}
       state={state}
       viewState={viewState}
     />

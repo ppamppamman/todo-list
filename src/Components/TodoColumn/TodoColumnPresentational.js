@@ -1,16 +1,29 @@
 import React from 'react'
 import styled from 'styled-components';
+import { TodoCardViewState } from '../TodoCard/const.js';
+import TodoCardContainer from '../TodoCard/TodoCardContainer.js';
 
 function TodoColumnPresentational(props) {
+  const renderTodos = (todosData) => {
+    return todosData.map(data => 
+      <TodoCardContainer
+        key={data.id ?? new Date().valueOf()} // FIXME: replace to ID generator}
+        addTodo={props.addTodo}
+        deleteTodo={props.deleteTodo}
+        viewState={data.id ? TodoCardViewState.NORMAL : TodoCardViewState.EDIT}
+        state={data}
+      />);
+  }
+
   return (
     <Column>
       <TopBar>
         <Title>{props.title}</Title>
-        <CardCnt>{props.todoCnt}</CardCnt>
+        <CardCnt>{props.todosData.length}</CardCnt>
         <DeleteBtn>x</DeleteBtn>
-        <AddBtn>+</AddBtn>
+        <AddBtn onClick={props.handleClickAddBtn}>+</AddBtn>
       </TopBar>
-      {props.todos}
+      {renderTodos(props.todosData)}
     </Column>
   );
 }
@@ -18,20 +31,22 @@ function TodoColumnPresentational(props) {
 export default TodoColumnPresentational;
 
 const Column = styled.div`
+  & + & {
+    margin-left: 14px;
+  }
+
   display: inline-block;
   vertical-align: top;
 `;
 
 const TopBar = styled.div`
-  display: inline-block;
-  padding: 0px 8px;
-  width: 308px;
+  width: 300px;
   height: 26px;
+  padding: 0 6px;
 `;
 
 const Title = styled.div`
   float: left;
-  width: 114px;
   height: 26px;
   font-family: "Noto Sans KR";
   font-style: normal;
