@@ -7,7 +7,7 @@ function TodoCardPresentational(props) {
     // TODO, FIXME
     return (
       <div>
-        <Caption>TMP: Neis by web</Caption>
+        <Caption>{`${props.state.author} by web`}</Caption>
         <DeleteBtn
           onMouseOver={props.handleMouseOverDeleteBtn}
           onMouseLeave={props.handleMouseLeaveDeleteBtn}>
@@ -43,6 +43,7 @@ function TodoCardPresentational(props) {
         value={props.state.title}
         disabled={isEditMode() ? false : true} />
       <Content
+        ref={props.contentRef}
         onChange={props.handleChangeContent}
         spellCheck={false}
         maxlength="500"
@@ -60,7 +61,6 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   padding: 16px;
-  width: 310px;
   height: auto;
   position: relative;
   box-sizing: border-box;
@@ -116,6 +116,10 @@ const Title = styled.input`
 
   &:disabled {
     pointer-events: none;
+
+    &::selection {
+      background: transparent;
+    }
   }
 `;
 
@@ -137,9 +141,12 @@ const Content = styled.textarea`
 
   &:disabled {
     pointer-events: none;
+
+    &::selection {
+      background: transparent;
+    }
   }
 `;
-
 
 const CancelBtn = styled.button`
   float: left;

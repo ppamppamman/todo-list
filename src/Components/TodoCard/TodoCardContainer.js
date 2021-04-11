@@ -15,20 +15,29 @@ function TodoCardContainer(props) {
 
   const [state, setState] = useState(props.state ?? _initialState);
   const [viewState, setViewState] = useState(props.viewState);
-  const [currFocus, setCurrFocus] = useState();
+  const [$currFocus, setCurrFocus] = useState();
   const titleRef = useRef();
   const contentRef = useRef();
 
   useEffect(() => {
-    if (viewState === TodoCardViewState.EDIT) {
-      currFocus.focus();
-      _cursorToEnd(currFocus);
+    if (viewState === TodoCardViewState.EDIT && $currFocus) {
+      $currFocus.focus();
+      _cursorToEnd($currFocus);
     }
   }, [viewState]);
+
+  useEffect(() => {
+    _resizeContentHeight();
+  }, [state]);
 
   const _cursorToEnd = ($input) => {
     $input.selectionEnd = $input.selectionEnd + $input.value.length;
     $input.selectionStart = $input.selectionEnd;
+  }
+
+  const _resizeContentHeight = () => {
+    if (contentRef.current.clientHeight < contentRef.current.scrollHeight)
+      contentRef.current.style.height = `${contentRef.current.scrollHeight + 4}px`;
   }
 
   const handleDoubleClickCapture = (evt) => {
@@ -50,8 +59,8 @@ function TodoCardContainer(props) {
   };
 
   const handleChangeContent = ({ target }) => {
-    if (target.clientHeight < target.scrollHeight)
-      target.style.height = `${target.scrollHeight + 4}px`;
+//    if (target.clientHeight < target.scrollHeight)
+//      _resizeContentHeight(target);
 
     setState({ ...state, content: target.value });
   };
