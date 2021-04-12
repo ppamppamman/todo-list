@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import SideNavigator from "./SideNavigatorPresentational";
 
-const SideNavigatorContainer = () => {
+const SideNavigatorContainer = ({ todoHistory }) => {
   const { mode, setMode, play, handleClick } = useHeaderContainer();
 
   return (
@@ -13,9 +13,13 @@ const SideNavigatorContainer = () => {
         value={mode ? "" : "MENU"}
         onClick={handleClick}
       />
-      {play === "start" ? (
-        <SideNavigator mode={mode} setMode={setMode}></SideNavigator>
-      ) : null}
+      {play === "start" && (
+        <SideNavigator
+          todoHistory={todoHistory}
+          mode={mode}
+          setMode={setMode}
+        ></SideNavigator>
+      )}
     </Box>
   );
 };

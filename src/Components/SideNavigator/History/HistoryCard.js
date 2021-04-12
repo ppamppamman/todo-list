@@ -1,53 +1,25 @@
 import React from "react";
 import styled from "styled-components";
+import * as actions from "../../../util/actions/card";
 
-export default function HistoryCard({
-  title,
-  author,
-  column,
-  selectCondition,
-}) {
-  const handleColumn = ({
-    title,
-    // BeforeTitle,
-    // AfterTitle,
-    author,
-    column,
-    BeforeColumn,
-    AfterColumn,
-    selectCondition,
-  }) => {
-    return selectCondition === "이동" ? (
-      <Content>
-        <Name>{"@" + author}</Name>
-        <Text>
-          {title}를 {BeforeColumn}에서 {AfterColumn}으로 {selectCondition}
-          하였습니다.
-        </Text>
-        <Time>분전</Time>
-      </Content>
-    ) : selectCondition === "변경" ? (
-      <Content>
-        <Name>{"@" + author}</Name>
-        <Text>
-          {title}로 {selectCondition}
-          하였습니다.
-        </Text>
-        <Time>분전</Time>
-      </Content>
-    ) : (
-      <Content>
-        <Name>{"@" + author}</Name>
-        <Text>
-          {column}에 {title}를 {selectCondition}
-          하였습니다.
-        </Text>
-        <Time>분전</Time>
-      </Content>
-    );
-  };
+export default function HistoryCard({ title, date, author, action, from, to }) {
+  // 핸들링 되는것을 함수로 쪼개라
+  // DELETE, MOVE
 
-  return <div>{handleColumn({ title, author, column, selectCondition })}</div>;
+  // const handleColumn = ({ title, date, author, action, from, to }) => {
+  // return selectCondition === actions.MOVE_CARD;
+  //스위치문으로만들어보자
+  // };
+
+  return (
+    <div>
+      <Content>
+        <Name>{"@" + author}</Name>
+        <Text>{title}</Text>
+        <Time>분전</Time>
+      </Content>
+    </div>
+  );
 }
 
 const Name = styled.div`

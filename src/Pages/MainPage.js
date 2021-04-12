@@ -10,24 +10,27 @@ import SideNavigatorContainer from "../Components/SideNavigator/SideNavigatorCon
 // import reducer from '../util/reducer';
 
 // todocard: { title: '', content: '', createDate: null, updateDate: null, author: '', },
-// todoChange: {title:, date:, author:, action:, from:, to: }
+// todoHistory: {title:, date:, author:, action:, from:, to: }
 // Date : YYYY-MM-DDTHH:MM;
 
 const MainPage = () => {
   const [todoHistory, setTodoHistory] = useState([]);
   const [events, handleDispatch] = useDispatch();
-  
+
   useEffect(() => {
-    setTodoHistory(events)
-  }, [todoHistory])
+    setTodoHistory(events);
+  }, [events]);
 
   return (
     <MainLayout>
       <Box>
-        <HeaderContainer todoHistory={todoHistory} onDispatch={handleDispatch} />
-        <SideNavigatorContainer />
+        <HeaderContainer />
+        <SideNavigatorContainer
+          todoHistory={todoHistory}
+          onDispatch={handleDispatch}
+        />
       </Box>
-      <TodoColumnListContainer onDispatch={handleDispatch}/>
+      <TodoColumnListContainer onDispatch={handleDispatch} />
     </MainLayout>
   );
 };
