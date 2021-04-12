@@ -3,31 +3,49 @@ import styled, { keyframes } from "styled-components";
 import TodoCard from "../Header/TodoCard";
 
 function SideNavigator({ mode, setMode }) {
+  // 필요한 props
+  // author, title, column:(해야할 일 or 하고 있는 일 or 완료한 일), function:(등록, 삭제, 변경, 이동)
+
   const obj = [
-    { title: "git", author: "neis", age: 28 },
-    { title: "javascript", author: "pampam", age: 29 },
-    { title: "node", author: "peng", age: 27 },
+    {
+      keyValue: 1,
+      author: "neis",
+      title: "git",
+      column: "해야할 일",
+      selectCondition: "등록",
+    },
+    {
+      keyValue: 2,
+      author: "pampam",
+      title: "javascript",
+      column: "하고 있는 일",
+      selectCondition: "제거",
+    },
+    {
+      keyValue: 3,
+      author: "peng",
+      title: "node",
+      column: "완료한 일",
+      selectCondition: "이동",
+    },
   ];
+
+  const handleMode = () => setMode(false);
 
   return (
     <Bar style={{ mode }}>
       <BarHeader>
         <UpdateList>Update List</UpdateList>
-        <Close_btn
-          onClick={function () {
-            setMode(false);
-          }}
-        >
-          EXIT
-        </Close_btn>
+        <Close_btn onClick={handleMode}>EXIT</Close_btn>
       </BarHeader>
       {obj.map((v) => {
         return (
           <TodoCard
-            key={v.title}
+            keyValue={v.keyValue}
             title={v.title}
             author={v.author}
-            age={v.age}
+            column={v.column}
+            selectCondition={v.selectCondition}
           />
         );
       })}
