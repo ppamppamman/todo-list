@@ -57,6 +57,7 @@ function TodoColumnContainer(props) {
   return (
     <TodoColumnPresentational
       handleClickAddBtn={handleClickAddBtn}
+      dispatch={props.onDispatch}
       addTodo={addTodo}
       deleteTodo={deleteTodo}
       title={state.title}

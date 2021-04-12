@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Global from '../../global.js';
+import * as Action from '../../util/actions/card.js';
 import { TodoCardViewState } from './const.js';
 import TodoCardPresentational from './TodoCardPresentational.js';
 
@@ -58,7 +59,7 @@ function TodoCardContainer(props) {
   const handleClickCancelBtn = () => {
     setViewState(TodoCardViewState.NORMAL);
 
-    if (state.createDate)
+    if (state.createTime)
       setState({ ...state, title: initialTitle, content: initialContent });
     else
       props.deleteTodo(state.id);
@@ -67,14 +68,18 @@ function TodoCardContainer(props) {
   };
 
   const handleClickConfirmBtn = () => {
-    // TODO: data arrangement, network logic
+    // TODO: loading, network logic
+    const currTime = new Date();
+    setState({ ...state, createTime: state.createTime ?? currTime.valueOf(), updateTime: currTime.valueOf() });
     setViewState(TodoCardViewState.NORMAL);
+    props.dispatch({ action: Action.ADD_CARD, ...state });
   };
 
   const handleClickDeleteBtn = () => {
+    // TODO: PopupMessage
     // TODO: network logic
     props.deleteTodo(state.id);
-    // TODO: PopupMessage
+    props.dispatch({ action: Action.DELETE_CARD, ...state });
   };
 
   const handleMouseOverDeleteBtn = () => {
