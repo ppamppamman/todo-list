@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
+import useDispatch from "../util/hooks/useDispatch";
+
 import HeaderContainer from "../Components/Header/HeaderContainer";
 import TodoColumnListContainer from "../Components/TodoColumnList/TodoColumnListContainer";
 import SideNavigatorContainer from "../Components/SideNavigator/SideNavigatorContainer";
@@ -12,34 +15,19 @@ import SideNavigatorContainer from "../Components/SideNavigator/SideNavigatorCon
 
 const MainPage = () => {
   const [todoHistory, setTodoHistory] = useState([]);
-
-  const handleChangeTodo = ({ type, payload }) => {
-    // 1) 타입(아마도 액션명) 감지
-    // 2) HeaderContainer는 todos를 props로 전달받고 있음.
-    // 3) setTodos로 업데이트
-    // switch(type) {
-    //   case "ADD_CARD":
-    //     const newTodos = {
-    //       ...todoState.todos,
-    //       [payload.columnName]: [...todoState.todos[payload.columnName], payload.value],
-    //     };
-    //     const newTodoChanges = {
-    //       ...todoState.todoChanges
-    //     }
-    //     setTodos({
-    //       ...todoState.todos,
-    //       [todoState.todoChanges]: payload.value
-    //     });
-    // }
-  };
+  const [events, handleDispatch] = useDispatch();
+  
+  useEffect(() => {
+    setTodoHistory(events)
+  }, [todoHistory])
 
   return (
     <MainLayout>
       <Box>
-        <HeaderContainer todoHistory={todoHistory} />
+        <HeaderContainer todoHistory={todoHistory} onDispatch={handleDispatch} />
         <SideNavigatorContainer />
       </Box>
-      <TodoColumnListContainer />
+      <TodoColumnListContainer onDispatch={handleDispatch}/>
     </MainLayout>
   );
 };
