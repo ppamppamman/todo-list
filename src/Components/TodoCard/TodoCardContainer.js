@@ -58,7 +58,7 @@ function TodoCardContainer(props) {
   const handleClickCancelBtn = () => {
     setViewState(TodoCardViewState.NORMAL);
 
-    if (state.id)
+    if (state.createDate)
       setState({ ...state, title: initialTitle, content: initialContent });
     else
       props.deleteTodo(state.id);
