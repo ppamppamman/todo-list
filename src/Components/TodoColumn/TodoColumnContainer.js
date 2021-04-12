@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Global from '../../global.js'
 import TodoColumnPresentational from './TodoColumnPresentational.js'
-// import { TodoCardViewState } from '../TodoCard/const.js'; // FIXME: handle globally?
 
 const MOCK_DATA = [
   {
@@ -47,7 +46,7 @@ function TodoColumnContainer(props) {
   }
 
   const deleteTodo = (todoId) => {
-    // TODO: Loading
+    // TODO: DELETE API, Loading
     setTodosData(todosData.filter(data => data.id !== todoId));
   }
 

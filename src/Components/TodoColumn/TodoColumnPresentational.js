@@ -7,10 +7,10 @@ function TodoColumnPresentational(props) {
   const renderTodos = (todosData) => {
     return todosData.map(data => 
       <TodoCardContainer
-        key={data.id ?? new Date().valueOf()} // FIXME: replace to ID generator}
+        key={data.id}
         addTodo={props.addTodo}
         deleteTodo={props.deleteTodo}
-        viewState={data.id ? TodoCardViewState.NORMAL : TodoCardViewState.EDIT}
+        viewState={data.createDate ? TodoCardViewState.NORMAL : TodoCardViewState.EDIT}
         state={data}
       />);
   }
