@@ -9,8 +9,8 @@ const Global = {
       author: Global.getUser(),
       title: '',
       content: '',
-      createDate: null,
-      updateDate: null,
+      createTime: null,
+      updateTime: null,
     }
   },
   generateChildId: () => { // FIXME: this is temporary implementation
