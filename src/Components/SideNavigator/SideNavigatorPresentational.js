@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import TodoCard from "../Header/TodoCard";
+import HistoryCard from "./History/HistoryCard";
 
 function SideNavigator({ mode, setMode }) {
   // 필요한 props
@@ -8,21 +8,21 @@ function SideNavigator({ mode, setMode }) {
 
   const obj = [
     {
-      keyValue: 1,
+      id: 1,
       author: "neis",
       title: "git",
       column: "해야할 일",
       selectCondition: "등록",
     },
     {
-      keyValue: 2,
+      id: 2,
       author: "pampam",
       title: "javascript",
       column: "하고 있는 일",
       selectCondition: "제거",
     },
     {
-      keyValue: 3,
+      id: 3,
       author: "peng",
       title: "node",
       column: "완료한 일",
@@ -38,10 +38,10 @@ function SideNavigator({ mode, setMode }) {
         <UpdateList>Update List</UpdateList>
         <Close_btn onClick={handleMode}>EXIT</Close_btn>
       </BarHeader>
-      {obj.map((v) => {
+      {obj.reverse().map((v, index) => {
         return (
-          <TodoCard
-            keyValue={v.keyValue}
+          <HistoryCard
+            key={index}
             title={v.title}
             author={v.author}
             column={v.column}
@@ -91,6 +91,8 @@ const Bar = styled.div`
   height: 100%;
   border: 1px solid black;
   background-color: white;
+
+  overflow: scroll;
 
   animation-duration: 0.35s;
   animation-timing-function: ease-in-out;

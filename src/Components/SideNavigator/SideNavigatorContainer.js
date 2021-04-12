@@ -7,10 +7,9 @@ const SideNavigatorContainer = () => {
 
   return (
     <Box>
-      {/* 펭도리 수정부분 */}
       <NavigationInput
         type="button"
-        mode={mode}
+        mode={String(mode)}
         value={mode ? "" : "MENU"}
         onClick={handleClick}
       />
@@ -21,13 +20,14 @@ const SideNavigatorContainer = () => {
   );
 };
 
-const useHeaderContainer = (e) => {
+const useHeaderContainer = () => {
   const [mode, setMode] = useState(false);
   const [play, setPlay] = useState("end");
   const handleClick = () => {
     setMode((prevMode) => !prevMode);
     setPlay("start");
   };
+
   return {
     mode,
     setMode,
