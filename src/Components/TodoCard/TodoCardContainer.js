@@ -69,10 +69,17 @@ function TodoCardContainer(props) {
 
   const handleClickConfirmBtn = () => {
     // TODO: loading, network logic
+    const isUpdate = state.createTime !== null;
     const currTime = new Date();
-    setState({ ...state, createTime: state.createTime ?? currTime.valueOf(), updateTime: currTime.valueOf() });
+
+    setState({
+      ...state,
+      id: `${Global.getUser()}-${currTime.valueOf()}`,
+      createTime: state.createTime ?? currTime.valueOf(),
+      updateTime: currTime.valueOf()
+    });
     setViewState(TodoCardViewState.NORMAL);
-    props.dispatch({ action: Action.ADD_CARD, ...state });
+    props.dispatch({ action: isUpdate ? Action.UPDATE_CARD : Action.ADD_CARD, ...state });
   };
 
   const handleClickDeleteBtn = () => {
