@@ -8,12 +8,13 @@ const SideNavigatorContainer = ({ todoHistory }) => {
   return (
     <Box>
       <NavigationInput
+        src="https://i.ibb.co/mGZXBvH/2021-04-13-5-08-50.png"
         type="button"
         mode={String(mode)}
-        value={mode ? "" : "MENU"}
+        // value={mode ? "" : "MENU"}
         onClick={handleClick}
       />
-      {play === "start" && (
+      {play && (
         <SideNavigator
           todoHistory={todoHistory}
           mode={mode}
@@ -26,10 +27,10 @@ const SideNavigatorContainer = ({ todoHistory }) => {
 
 const useHeaderContainer = () => {
   const [mode, setMode] = useState(false);
-  const [play, setPlay] = useState("end");
+  const [play, setPlay] = useState(false);
   const handleClick = () => {
     setMode((prevMode) => !prevMode);
-    setPlay("start");
+    setPlay(true);
   };
 
   return {
@@ -43,6 +44,7 @@ const useHeaderContainer = () => {
 
 const Box = styled.div`
   padding: 5% 0;
+  width: 10%;
   box-sizing: border-box;
 `;
 
@@ -55,12 +57,11 @@ from{
   }
 `;
 
-const NavigationInput = styled.input`
-  ${(props) => console.log(props)}
+const NavigationInput = styled.img`
   cursor: pointer;
-  padding: 5% 0;
+  width: 80px;
+  padding-top: 5px;
   box-sizing: border-box;
-  font-size: 20px;
   background-color: white;
   outline: none;
   border: none;
@@ -68,7 +69,7 @@ const NavigationInput = styled.input`
     transform: translateY(2px);
   }
 
-  animation-duration: 1s;
+  animation-duration: 0.35s;
   animation-timing-function: ease-in-out;
   animation-name: ${(props) => (props.mode === "true" ? null : slowView)};
 `;
