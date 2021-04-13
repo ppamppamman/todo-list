@@ -14,7 +14,8 @@ function HeaderContainer() {
 
 const Container = styled.div`
   display: flex;
-  font-size: 20px;
+  font-size: 35px;
+  font-weight: bold;
   padding: 5% 0;
   box-sizing: border-box;
   width: 100%;

@@ -43,7 +43,7 @@ const Modal_background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   right: -10%;
   top: -10%;
   left: -10%;
