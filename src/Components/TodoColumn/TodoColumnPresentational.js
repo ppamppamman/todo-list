@@ -11,7 +11,7 @@ function TodoColumnPresentational(props) {
         dispatch={props.dispatch}
         addTodo={props.addTodo}
         deleteTodo={props.deleteTodo}
-        viewState={data.createDate ? TodoCardViewState.NORMAL : TodoCardViewState.EDIT}
+        viewState={data.createTime ? TodoCardViewState.NORMAL : TodoCardViewState.EDIT}
         state={data}
       />);
   }
