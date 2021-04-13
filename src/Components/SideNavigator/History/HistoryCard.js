@@ -10,24 +10,22 @@ export default function HistoryCard({ title, date, author, action, from, to }) {
   // return selectCondition === actions.MOVE_CARD;
   //스위치문으로만들어보자
   // };
+  const fuc = () => {
+    //switch
+    return; // 여기서 작문
+  };
 
   return (
-    <div>
-      <Content>
-        <Name>{"@" + author}</Name>
-        <Text>{title}</Text>
-        <Time>분전</Time>
-      </Content>
-    </div>
+    <Content>
+      <Name>{"@" + author}</Name>
+      <Text>
+        {column}에 {title}를 {selectCondition}
+        하였습니다.
+      </Text>
+      <Time>분전</Time>
+    </Content>
   );
 }
-
-const Name = styled.div`
-  text-align: left;
-  font-size: 18px;
-  font-style: oblique;
-  padding-bottom: 12px;
-`;
 
 const Text = styled.div`
   font-size: 20px;

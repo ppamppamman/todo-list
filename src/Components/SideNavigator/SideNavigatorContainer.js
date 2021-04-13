@@ -56,6 +56,7 @@ from{
 `;
 
 const NavigationInput = styled.input`
+  ${(props) => console.log(props)}
   cursor: pointer;
   padding: 5% 0;
   box-sizing: border-box;
@@ -67,9 +68,9 @@ const NavigationInput = styled.input`
     transform: translateY(2px);
   }
 
-  animation-duration: 0.4s;
+  animation-duration: 1s;
   animation-timing-function: ease-in-out;
-  animation-name: ${(props) => (props.mode ? null : slowView)};
+  animation-name: ${(props) => (props.mode === "true" ? null : slowView)};
 `;
 
 export default SideNavigatorContainer;
