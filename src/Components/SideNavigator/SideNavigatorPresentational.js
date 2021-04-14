@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import HistoryCard from "./History/HistoryCard";
 
 function SideNavigator({ todoHistory, mode, setMode }) {
   // 필요한 props
   // author, title, column:(해야할 일 or 하고 있는 일 or 완료한 일), function:(등록, 삭제, 변경, 이동)
-  const handleMode = () => setMode(false);
+
+  const Navigator = useRef(null);
+
+  const handleMode = () => {
+    setMode(false);
+    // setTimeout(() => {
+    //   handleDisplay();
+    // }, 350);
+  };
+
+  // const handleDisplay = () => {
+  //   Navigator.current.style.display = "none";
+  // };
 
   return (
-    <Bar style={{ mode }}>
+    <Bar style={{ mode }} ref={Navigator}>
       <BarHeader>
         <UpdateList src="https://i.ibb.co/41qDxpc/2021-04-13-4-01-04.png" />
         <Close_btn onClick={handleMode}>❌</Close_btn>
@@ -48,7 +60,7 @@ const Close_btn = styled.div`
 const slideIn = keyframes`
     from{
         opacity:0;
-        transform: translateX(200px);
+        transform: translateX(382px);
     }
     to {
         opacity:1;
@@ -63,7 +75,7 @@ const slideOut = keyframes`
     }
     to {
         opacity:0;
-        transform: translateX(200px);
+        transform: translateX(382px);
     }
 `;
 
@@ -84,6 +96,7 @@ const Bar = styled.div`
   animation-timing-function: ease-in-out;
   animation-name: ${(props) => (props.style.mode ? slideIn : slideOut)};
   opacity: ${(props) => (props.style.mode ? 1 : 0)};
+  animation-fill-mode: forwards;
 `;
 
 const BarHeader = styled.div`
