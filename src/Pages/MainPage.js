@@ -22,7 +22,7 @@ const MainPage = () => {
   }, [events]);
 
   return (
-    <MainLayout>
+    <MainLayout className="main">
       <Box>
         <HeaderContainer />
         <SideNavigatorContainer
@@ -41,11 +41,13 @@ const Box = styled.div`
 `;
 
 const Responsive = styled.div`
-  margin-left: 80px;
-  margin-right: 80px;
+  padding-left: 80px;
+  padding-right: 80px;
+  box-sizing: border-box;
 `;
 const MainLayout = styled(Responsive)`
-  /* width: 100%; */
+  width: 100%;
+
   display: flex;
   flex-direction: column;
 `;

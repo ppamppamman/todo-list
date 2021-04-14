@@ -75,7 +75,7 @@ function TodoColumnContainer(props) {
 
   return (
     <TodoColumnPresentational
-      handleDragStart={props.handleDragStart} handleDragOver={props.handleDragOver} handleDrop={props.handleDrop} // 드래그
+      handleDragStart={props.handleDragStart} handleDragOver={props.handleDragOver} handleDragEnter={props.handleDragEnter} handleDragLeave={props.handleDragLeave} handleDrop={props.handleDrop} // 드래그
       handleClickAddBtn={handleClickAddBtn}
       dispatch={props.onDispatch}
       addTodo={addTodo}

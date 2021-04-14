@@ -5,6 +5,7 @@ import TodoColumnContainer from "../TodoColumn/TodoColumnContainer.js";
 
 const TodoColumnListContainer = ({ onDispatch }) => {
   const [draggableCard, setDraggableCard] = useState(null);
+  const $dragEnterArea = useRef();
   const handleDispatch = () => {
     // TODO 네트워크 및 드래그앤 드랍
     // TEST
@@ -30,31 +31,53 @@ const TodoColumnListContainer = ({ onDispatch }) => {
   const handleDrop = (ev) => {
     console.log("drop_handler", ev)
     ev.preventDefault();
-    // 대상의 id를 가져와 이동한 대상 DOM 요소를 추가합니다.
-    // Get the id of the target and add the moved element to the target's DOM
-    
     const data = ev.dataTransfer.getData("application/my-app");
-    ev.target.appendChild(document.getElementById(data));
+    // ev.target.appendChild(document.getElementById(data));
   }
 
-  const handleDragOver = (e) => {
-    debounced(() => dragover_handler(e), 350)
-  }
-
-  const timeoutFunc = useRef();
-  const debounced = (func, millisec) => {
-    if(timeoutFunc.current) clearTimeout(timeoutFunc.current)
-    timeoutFunc.current = setTimeout(() => {
-      console.log("fired", timeoutFunc.current)
-      console.log(func())
-    }, millisec);
-  }
-  const dragover_handler = (ev) => {
-    console.log("dragover_handler", ev)
+  const handleDragLeave = (ev) => {
+    ev.stopPropagation();
     ev.preventDefault();
     
+    if (ev.target.className.includes("droppable")) ev.target.style.border = "";
+  }
+  const handleDragEnter = (ev) => {
+    ev.stopPropagation();
+    ev.preventDefault();
+    
+    if (ev.target.className.includes("droppable")) ev.target.style.border = "1px solid red";
+  }
+
+  const handleDragOver = (ev) => {
+    ev.stopPropagation();
+    ev.preventDefault(); // dragOver만 작동. throttle, debounce 불가
+    
+    // throttle(() => { dragover_handler(ev)}, 1000)
+    // debounced(dragover_handler, 350)
+  }
+
+  // const timeoutFunc = useRef();
+  // const throttle = (func, millisec) => {
+  //   if (!timeoutFunc.current) {
+  //     timeoutFunc.current = setTimeout(() => {
+  //       console.log("fired", timeoutFunc.current)
+  //       console.log(func())
+  //       timeoutFunc.current = false;
+  //     }, millisec);
+  //   }
+  // }
+  // const debounced = (func, millisec) => {
+  //   if(timeoutFunc.current) clearTimeout(timeoutFunc.current)
+  //   timeoutFunc.current = setTimeout(() => {
+  //     console.log("fired", timeoutFunc.current)
+  //     func()
+  //   }, millisec);
+  // }
+
+  const dragover_handler = (ev) => {
+    ev.preventDefault();
     ev.dataTransfer.dropEffect = "move"
-    return false;
+    console.log("dragover_handler", ev)
   }
   
   return (
@@ -62,8 +85,7 @@ const TodoColumnListContainer = ({ onDispatch }) => {
       {columns.map((colName, i) => {
         return <TodoColumnContainer state={colName} key={`${colName}-${i}`} 
           onDispatch={onDispatch} 
-          handleDragStart={handleDragStart} handleDragOver={handleDragOver} handleDrop={handleDrop}
-
+          handleDragStart={handleDragStart} handleDragOver={handleDragOver} handleDrop={handleDrop} handleDragEnter={handleDragEnter} handleDragLeave={handleDragLeave}
         />;
       })}
     </TodoColumnContainerLayout>

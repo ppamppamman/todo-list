@@ -11,14 +11,15 @@ function TodoColumnPresentational(props) {
         dispatch={props.dispatch}
         addTodo={props.addTodo}
         deleteTodo={props.deleteTodo}
-        viewState={data.createDate ? TodoCardViewState.NORMAL : TodoCardViewState.EDIT}
+        viewState={data.createTime ? TodoCardViewState.NORMAL : TodoCardViewState.EDIT}
         handleDragStart={props.handleDragStart}  // 드래그
         state={data}
       />);
   }
 
   return (
-    <Column onDragOver={props.handleDragOver} onDrop={props.handleDrop}> {/* 드래그 */}
+    <Column className="droppable" 
+      onDragOver={props.handleDragOver} onDragEnter={props.handleDragEnter} onDragLeave={props.handleDragLeave} onDrop={props.handleDrop}> {/* 드래그 */}
       <TopBar>
         <Title>{props.title}</Title>
         <CardCnt>{props.todosData.length}</CardCnt>
@@ -36,9 +37,13 @@ const Column = styled.div`
   & + & {
     margin-left: 14px;
   }
-  border: 1px solid red;
+  
   display: inline-block;
   vertical-align: top;
+  
+  z-index: 1;
+  height: 1000px;
+  box-sizing: border-box;
 `;
 
 const TopBar = styled.div`
