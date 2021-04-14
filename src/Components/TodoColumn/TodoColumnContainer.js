@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Global from '../../global.js'
 import TodoColumnPresentational from './TodoColumnPresentational.js'
 
@@ -54,8 +54,28 @@ function TodoColumnContainer(props) {
     setTodosData([Global.getInitialTodoData(), ...todosData]);
   };
 
+  // 드래그
+  // const timeoutFunc = useRef();
+  // const debounced = (func, millisec) => {
+  //   if(timeoutFunc.current) clearTimeout(timeoutFunc.current)
+  //   timeoutFunc.current = setTimeout(() => {
+  //     console.log("fired", timeoutFunc.current)
+  //     console.log(func())
+  //   }, millisec);
+  // }
+   
+  // const dragover_handler = (ev) => {
+  //   console.log("dragover_handler", ev)
+  //   ev.preventDefault();
+    
+  //   ev.dataTransfer.dropEffect = "move"
+  //   return false;
+  // }
+
+
   return (
     <TodoColumnPresentational
+      handleDragStart={props.handleDragStart} handleDragOver={props.handleDragOver} handleDragEnter={props.handleDragEnter} handleDragLeave={props.handleDragLeave} handleDrop={props.handleDrop} // 드래그
       handleClickAddBtn={handleClickAddBtn}
       dispatch={props.onDispatch}
       addTodo={addTodo}

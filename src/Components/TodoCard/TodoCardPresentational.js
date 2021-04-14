@@ -34,7 +34,8 @@ function TodoCardPresentational(props) {
   const isEditMode = () => props.viewState === TodoCardViewState.EDIT;
 
   return (
-    <Card className={props.viewState} onDoubleClickCapture={props.handleDoubleClickCapture}>
+    <Card className={props.viewState} onDoubleClickCapture={props.handleDoubleClickCapture} 
+      draggable={"true"} onDragStart={props.handleDragStart} >  {/*드래그 테스트*/}
       <Title
         ref={props.titleRef}
         onChange={props.handleChangeTitle}

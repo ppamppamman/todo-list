@@ -10,6 +10,7 @@ const HistoryCard = ({ title, date, author, action, from, to }) => {
   // return selectCondition === actions.MOVE_CARD;
   //스위치문으로만들어보자
   // };
+  console.log(date);
   const getText = (title, action, from, to) => {
     switch (action) {
       case actions.MOVE_CARD:
@@ -55,7 +56,7 @@ const HistoryCard = ({ title, date, author, action, from, to }) => {
     <Card>
       <Emoji>🥳</Emoji>
       <Content>
-        <Name>{"@" + author}</Name>
+        <Name>{"@PNP"}</Name>
         <Text>{getText(title, action, from, to)}</Text>
         <Time>{getTime(new Date())}</Time>
       </Content>
