@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import SideNavigator from "./SideNavigatorPresentational";
+import SideNavigatorPresentational from "./SideNavigatorPresentational";
 
 const SideNavigatorContainer = ({ todoHistory }) => {
   const { mode, setMode, play, handleClick } = useHeaderContainer();
@@ -11,15 +11,14 @@ const SideNavigatorContainer = ({ todoHistory }) => {
         src="https://i.ibb.co/mGZXBvH/2021-04-13-5-08-50.png"
         type="button"
         mode={String(mode)}
-        // value={mode ? "" : "MENU"}
         onClick={handleClick}
       />
       {play && (
-        <SideNavigator
+        <SideNavigatorPresentational
           todoHistory={todoHistory}
           mode={mode}
           setMode={setMode}
-        ></SideNavigator>
+        ></SideNavigatorPresentational>
       )}
     </Box>
   );
