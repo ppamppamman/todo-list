@@ -1,23 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import HistoryCard from "./History/HistoryCard";
 
 function SideNavigator({ todoHistory, mode, setMode }) {
   // 필요한 props
   // author, title, column:(해야할 일 or 하고 있는 일 or 완료한 일), function:(등록, 삭제, 변경, 이동)
-
   const Navigator = useRef(null);
 
-  const handleMode = () => {
-    setMode(false);
-    // setTimeout(() => {
-    //   handleDisplay();
-    // }, 350);
-  };
-
-  // const handleDisplay = () => {
-  //   Navigator.current.style.display = "none";
-  // };
+  const handleMode = () => setMode(false);
 
   return (
     <Bar style={{ mode }} ref={Navigator}>
@@ -32,19 +22,27 @@ function SideNavigator({ todoHistory, mode, setMode }) {
 
       {[...todoHistory]
         .reverse()
-        .map(({ title, date, author, action, from, to }, index) => {
-          return (
-            <HistoryCard
-              key={index}
-              date={date}
-              title={title}
-              author={author}
-              action={action}
-              from={from}
-              to={to}
-            />
-          );
-        })}
+        .map(
+          (
+            { title, createTime, updateTime, author, action, from, to, id },
+            index
+          ) => {
+            console.log(todoHistory);
+            return (
+              <HistoryCard
+                key={index}
+                createTime={createTime}
+                updateTime={updateTime}
+                makeTime={id}
+                title={title}
+                author={author}
+                action={action}
+                from={from}
+                to={to}
+              />
+            );
+          }
+        )}
     </Bar>
   );
 }

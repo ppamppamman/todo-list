@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import * as actions from "../../../util/actions/card";
 
-const HistoryCard = ({ title, date, author, action, from, to }) => {
-  // 핸들링 되는것을 함수로 쪼개라
-  // DELETE, MOVE
-
-  // const handleColumn = ({ title, date, author, action, from, to }) => {
-  // return selectCondition === actions.MOVE_CARD;
-  //스위치문으로만들어보자
-  // };
-  console.log(date);
+const HistoryCard = ({
+  title,
+  createTime,
+  updateTime,
+  makeTime,
+  author,
+  action,
+  from,
+  to,
+}) => {
   const getText = (title, action, from, to) => {
     switch (action) {
       case actions.MOVE_CARD:
@@ -47,9 +48,29 @@ const HistoryCard = ({ title, date, author, action, from, to }) => {
     }
   };
 
-  const getTime = (date) => {
-    const now = new Date();
-    return `${now.getMinutes() - date.getMinutes()}분전`;
+  const timeForToday = (time) => {
+    const today = new Date();
+    const inputTime = new Date(time); // date 나오고
+    const betweenTime = Math.floor(
+      (today.getTime() - inputTime.getTime()) / 1000
+    );
+    return betweenTime < 1 ? "1초전" : `${betweenTime}초전`;
+  };
+
+  const getTime = (action, createTime, updateTime, makeTime) => {
+    switch (action) {
+      case actions.MOVE_CARD:
+        return;
+
+      case actions.UPDATE_CARD:
+        return timeForToday(updateTime);
+
+      case actions.ADD_CARD:
+        return timeForToday(makeTime);
+
+      case actions.DELETE_CARD:
+        return ``;
+    }
   };
 
   return (
@@ -58,7 +79,7 @@ const HistoryCard = ({ title, date, author, action, from, to }) => {
       <Content>
         <Name>{"@PNP"}</Name>
         <Text>{getText(title, action, from, to)}</Text>
-        <Time>{getTime(new Date())}</Time>
+        <Time>{getTime(action, createTime, updateTime, makeTime)}</Time>
       </Content>
     </Card>
   );
@@ -103,12 +124,9 @@ const Time = styled.div`
 const Card = styled.div`
   display: flex;
   word-break: break-all;
-  box-sizing: border-box;
-
   padding: 2% 5%;
   width: 90%;
-  height: 110px;
-  margin: auto;
+  margin: 3%;
   box-sizing: border-box;
   background-color: #c5e0f9;
 `;
