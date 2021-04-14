@@ -1,0 +1,26 @@
+{
+  "user": [
+    {
+      "id": "abc123",
+      "name": "Anonymous"
+    }
+  ],
+  "columns": [
+    {
+      "userId": "abc123",
+      "title": "COLUMN TITLE FOR TEST 0",
+      "id": "Z4ZqREijrlqkd0ATsfZk4"
+    },
+    {
+      "userId": "abc123",
+      "title": "COLUMN TITLE FOR TEST 0",
+      "id": "fMg-r1q4-BwgZWSjvyVMW"
+    },
+    {
+      "userId": "abc123",
+      "title": "COLUMN TITLE FOR TEST 0",
+      "id": "fF0_HwRngOpbNzdBw5sLl"
+    }
+  ],
+  "todos": []
+}

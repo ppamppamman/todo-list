@@ -7,26 +7,26 @@
   ],
   "user": [
     {
-      "id": "ppamppam",
+      "id": "pp123",
       "name": "ppamppam",
       "groupId": 1
     },
     {
-      "id": "Neis",
+      "id": "ne123",
       "name": "Neis",
       "groupId": 1
     },
     {
-      "id": "Pengdori",
-      "name": "Pengdory",
+      "id": "pd123",
+      "name": "Pengdori",
       "groupId": 1
     }
   ],
   "columns": [
-    { "id": 1, "title": "schedule" },
-    { "id": 2, "title": "progress" },
-    { "id": 3, "title": "complete" },
-    { "id": 4, "title": "codesquade" }
+    { "id": 1, "userId": "ne123", "title": "schedule" },
+    { "id": 2, "userId": "ne123", "title": "progress" },
+    { "id": 3, "userId": "ne123", "title": "complete" },
+    { "id": 4, "userId": "ne123", "title": "CodeSquade" }
   ],
   "todos": [
     {

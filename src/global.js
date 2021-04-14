@@ -1,8 +1,11 @@
-let USER = 'Anonymous';
+let USER = { id: 'abc123', name: 'Anonymous' };
+let SERVER_URL = 'http://localhost:3000';
 
 const Global = {
   setUser: (user) => { USER = user },
   getUser: () => USER,
+  setServerUrl: (serverUrl) => { SERVER_URL = serverUrl },
+  getServerUrl: () => SERVER_URL,
   getInitialTodoData: () => { // TODO: right located?
     return {
       id: Global.generateChildId(),

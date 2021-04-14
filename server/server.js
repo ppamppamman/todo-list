@@ -1,9 +1,5 @@
-// const jsonServer = require('json-server');
-// const server = jsonServer.create();
-// const router = jsonServer.router('db.json');
-// const middlewares = jsonServer.defaults();
-
 const path = require('path');
+const { nanoid } = require('nanoid');
 const express = require('express');
 const app = express();
 
@@ -17,40 +13,45 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, '/../build/index.html'));
 });
 
 app.get('/static/*', (req, res) => {
   res.sendFile(path.join(__dirname, req.url));
 });
 
-app.get('/column', (req, res) => {
-  res.json(db.get('columns').value());
+app.get('/:userId/columns', (req, res) => {
+  res.json(db.get('columns').filter({ userId: req.params.userId}).value());
 });
 
-app.post('/column', (req, res) => {
+// TODO: post user
+
+app.post('/:userId/column', (req, res) => {
+  req.body.id = nanoid();
+  db.get('columns').push(req.body).write();
+  res.json({ success: true });
+})
+
+app.get('/columns/:columnId', (req, res) => {
   //TODO
 });
 
-app.get('/column/:id', (req, res) => {
-  //TODO
-});
-
-app.get('/column/:columnId/todo', (req, res) => {
+app.get('/columns/:columnId/todos', (req, res) => {
   res.json(db.get('todos').filter({ columnId: req.params.columnId }).value());
 });
 
-app.get('/column/:columnId/todo/:todoId', (req, res) => {
+app.get('/columns/:columnId/todos/:todoId', (req, res) => {
   //TODO
 });
 
-app.post('/column/:columnId/todo', (req, res) => {
+app.post('/columns/:columnId/todo', (req, res) => {
+  req.body.id = nanoid();
   db.get('todos').push(req.body).write();
   res.json({ success: true });
 });
 
-app.put('/column/:columnId/todo/:todoId', (req, res) => {
-  db.get('todos').find({ id: req.params.id }).assign(req.body).write();
+app.patch('/columns/:columnId/todos/:todoId', (req, res) => {
+  db.get('todos').find({ id: req.params.todoId }).assign(req.body).write();
   res.json({ success: true });
 });
 
