@@ -1,14 +1,12 @@
 import React, {useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import TodoColumnContainer from '../TodoColumn/TodoColumnContainer.js';
+import TodoColumnContainer from "../TodoColumn/TodoColumnContainer.js";
 
 const TodoColumnListContainer = ({ onDispatch }) => {
-
   const [draggableCard, setDraggableCard] = useState(null);
   const handleDispatch = () => {
     // TODO 네트워크 및 드래그앤 드랍
-    
     // TEST
     // onDispatch({title: "todo.title", date:"todo.createDate", author:"todo.author", action:'DELETE', from:'complete'})
   }
@@ -18,7 +16,7 @@ const TodoColumnListContainer = ({ onDispatch }) => {
 
   useEffect(() => {
     // 서버로부터 컬럼 정보를 받는다. => setColumns 변환
-    handleDispatch()
+    handleDispatch();
   }, []);
   
   
@@ -69,8 +67,8 @@ const TodoColumnListContainer = ({ onDispatch }) => {
         />;
       })}
     </TodoColumnContainerLayout>
-  )
-}
+  );
+};
 
 const TodoDragArea = styled.div`
   position: absolute;
@@ -81,11 +79,13 @@ const TodoDragArea = styled.div`
   z-index: 1;
 
   // develop
-  background-color: ${(props) => { return props.env === "DEV" && "yellow" }};
-`
+  background-color: ${(props) => {
+    return props.env === "DEV" && "yellow";
+  }};
+`;
 
 const TodoColumnContainerLayout = styled.div`
   display: flex;
-`
+`;
 
 export default TodoColumnListContainer;

@@ -63,20 +63,19 @@ function TodoCardContainer(props) {
       setState({ ...state, title: initialTitle, content: initialContent });
     else
       props.deleteTodo(state.id);
-      
     // TODO: PopupMessage
   };
 
   const handleClickConfirmBtn = () => {
     // TODO: loading, network logic
     const isUpdate = state.createTime !== null;
-    const currTime = new Date();
+    const currTime = new Date().valueOf();
 
     setState({
       ...state,
-      id: `${Global.getUser()}-${currTime.valueOf()}`,
-      createTime: state.createTime ?? currTime.valueOf(),
-      updateTime: currTime.valueOf()
+      // id: `${Global.getUser()}-${currTime}`,
+      createTime: state.createTime ?? currTime,
+      updateTime: currTime
     });
     setViewState(TodoCardViewState.NORMAL);
     props.dispatch({ action: isUpdate ? Action.UPDATE_CARD : Action.ADD_CARD, ...state });
