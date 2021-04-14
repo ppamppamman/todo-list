@@ -109,6 +109,7 @@ function TodoCardContainer(props) {
       handleClickDeleteBtn={handleClickDeleteBtn}
       handleMouseOverDeleteBtn={handleMouseOverDeleteBtn}
       handleMouseLeaveDeleteBtn={handleMouseLeaveDeleteBtn}
+      draggable={true} handleDragStart={props.handleDragStart} // 드래그 테스트
       state={state}
       viewState={viewState}
     />
