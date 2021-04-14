@@ -43,6 +43,7 @@ const Column = styled.div`
   
   z-index: 1;
   height: 1000px;
+  padding: 20px;
   box-sizing: border-box;
 `;
 
