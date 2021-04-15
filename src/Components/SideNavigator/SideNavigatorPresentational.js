@@ -22,27 +22,20 @@ function SideNavigator({ todoHistory, mode, setMode }) {
 
       {[...todoHistory]
         .reverse()
-        .map(
-          (
-            { title, createTime, updateTime, author, action, from, to, id },
-            index
-          ) => {
-            console.log(todoHistory);
-            return (
-              <HistoryCard
-                key={index}
-                createTime={createTime}
-                updateTime={updateTime}
-                makeTime={id}
-                title={title}
-                author={author}
-                action={action}
-                from={from}
-                to={to}
-              />
-            );
-          }
-        )}
+        .map(({ title, updateTime, author, action, from, to }, index) => {
+          console.log(todoHistory);
+          return (
+            <HistoryCard
+              key={index}
+              updateTime={updateTime}
+              title={title}
+              author={author}
+              action={action}
+              from={from}
+              to={to}
+            />
+          );
+        })}
     </Bar>
   );
 }

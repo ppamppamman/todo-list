@@ -1,17 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import * as actions from "../../../util/actions/card";
 
-const HistoryCard = ({
-  title,
-  createTime,
-  updateTime,
-  makeTime,
-  author,
-  action,
-  from,
-  to,
-}) => {
+const HistoryCard = ({ title, updateTime, author, action, from, to, mode }) => {
+  const [count, setCount] = useState(null);
+
   const getText = (title, action, from, to) => {
     switch (action) {
       case actions.MOVE_CARD:
@@ -48,29 +41,16 @@ const HistoryCard = ({
     }
   };
 
-  const timeForToday = (time) => {
+  const getTimeGap = (updateTime, mode) => {
     const today = new Date();
-    const inputTime = new Date(time);
+    const inputTime = new Date(updateTime);
     const betweenTime = Math.floor(
-      (today.getTime() - inputTime.getTime()) / 1000
+      (today.getTime() - inputTime.getTime()) / 1000 / 60
     );
+
+    if (mode) setInterval(() => setCount(count + 1));
+
     return betweenTime < 1 ? "1분전" : `${betweenTime}분전`;
-  };
-
-  const getTime = (action, createTime, updateTime, makeTime, to) => {
-    switch (action) {
-      case actions.MOVE_CARD:
-        return timeForToday(to);
-
-      case actions.UPDATE_CARD:
-        return timeForToday(updateTime);
-
-      case actions.ADD_CARD:
-        return timeForToday(makeTime);
-
-      case actions.DELETE_CARD:
-        return ``;
-    }
   };
 
   return (
@@ -79,9 +59,7 @@ const HistoryCard = ({
       <Content>
         <Name>{"@PNP"}</Name>
         <Text>{getText(title, action, from, to)}</Text>
-        <Time>
-          {getTime(action, createTime, updateTime, makeTime, from, to)}
-        </Time>
+        <Time>{getTimeGap(updateTime, mode)}</Time>
       </Content>
     </Card>
   );
