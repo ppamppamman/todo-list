@@ -3,7 +3,7 @@ import styled from "styled-components";
 import * as actions from "../../../util/actions/card";
 
 const HistoryCard = ({ title, updateTime, author, action, from, to, mode }) => {
-  const [count, setCount] = useState(null);
+  // const [count, setCount] = useState(null);
 
   const getText = (title, action, from, to) => {
     switch (action) {
@@ -44,16 +44,17 @@ const HistoryCard = ({ title, updateTime, author, action, from, to, mode }) => {
   const getTimeGap = (updateTime, mode) => {
     const today = new Date();
     const inputTime = new Date(updateTime);
-    const betweenTime = Math.floor(
-      (today.getTime() - inputTime.getTime()) / 1000 / 60
-    );
+    // const sec = Math.floor((today.getTime() - inputTime.getTime()) / 1000);
+    // 초
+    const sec = new Date(today - inputTime).getSeconds();
+    const minute = new Date(today - inputTime).getMinutes();
+    const hour = today.getHours() - inputTime.getHours();
 
-    if (mode)
-      setInterval(() => {
-        setCount(count + 1);
-      }, 1000);
-
-    return betweenTime < 1 ? "1분전" : `${betweenTime}분전`;
+    return hour > 0
+      ? `${hour}시간전`
+      : minute > 0
+      ? `${minute}분전`
+      : `${sec}초전`;
   };
 
   return (
@@ -109,7 +110,7 @@ const Card = styled.div`
   word-break: break-all;
   padding: 2% 5%;
   width: 90%;
-  margin: 3%;
+  margin: 1% auto;
   box-sizing: border-box;
   background-color: #c5e0f9;
 `;
