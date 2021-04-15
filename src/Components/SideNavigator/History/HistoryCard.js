@@ -109,7 +109,7 @@ const Card = styled.div`
   display: flex;
   word-break: break-all;
   padding: 2% 5%;
-  width: 90%;
+  width: 340px;
   margin: 1% auto;
   box-sizing: border-box;
   background-color: #c5e0f9;

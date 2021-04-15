@@ -56,7 +56,7 @@ const useHeaderContainer = () => {
 
 const Box = styled.div`
   padding: 5% 0;
-  width: 10%;
+  width: 350px;
   box-sizing: border-box;
 `;
 
