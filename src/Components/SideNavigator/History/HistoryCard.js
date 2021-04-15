@@ -2,16 +2,9 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import * as actions from "../../../util/actions/card";
 
-const HistoryCard = ({
-  title,
-  createTime,
-  updateTime,
-  makeTime,
-  author,
-  action,
-  from,
-  to,
-}) => {
+const HistoryCard = ({ title, updateTime, author, action, from, to, mode }) => {
+  // const [count, setCount] = useState(null);
+
   const getText = (title, action, from, to) => {
     switch (action) {
       case actions.MOVE_CARD:
@@ -48,29 +41,20 @@ const HistoryCard = ({
     }
   };
 
-  const timeForToday = (time) => {
+  const getTimeGap = (updateTime, mode) => {
     const today = new Date();
-    const inputTime = new Date(time); // date 나오고
-    const betweenTime = Math.floor(
-      (today.getTime() - inputTime.getTime()) / 1000
-    );
-    return betweenTime < 1 ? "1초전" : `${betweenTime}초전`;
-  };
+    const inputTime = new Date(updateTime);
+    // const sec = Math.floor((today.getTime() - inputTime.getTime()) / 1000);
+    // 초
+    const sec = new Date(today - inputTime).getSeconds();
+    const minute = new Date(today - inputTime).getMinutes();
+    const hour = today.getHours() - inputTime.getHours();
 
-  const getTime = (action, createTime, updateTime, makeTime) => {
-    switch (action) {
-      case actions.MOVE_CARD:
-        return;
-
-      case actions.UPDATE_CARD:
-        return timeForToday(updateTime);
-
-      case actions.ADD_CARD:
-        return timeForToday(makeTime);
-
-      case actions.DELETE_CARD:
-        return ``;
-    }
+    return hour > 0
+      ? `${hour}시간전`
+      : minute > 0
+      ? `${minute}분전`
+      : `${sec}초전`;
   };
 
   return (
@@ -79,7 +63,7 @@ const HistoryCard = ({
       <Content>
         <Name>{"@PNP"}</Name>
         <Text>{getText(title, action, from, to)}</Text>
-        <Time>{getTime(action, createTime, updateTime, makeTime)}</Time>
+        <Time>{getTimeGap(updateTime, mode)}</Time>
       </Content>
     </Card>
   );
@@ -125,8 +109,8 @@ const Card = styled.div`
   display: flex;
   word-break: break-all;
   padding: 2% 5%;
-  width: 90%;
-  margin: 3%;
+  width: 340px;
+  margin: 1% auto;
   box-sizing: border-box;
   background-color: #c5e0f9;
 `;
