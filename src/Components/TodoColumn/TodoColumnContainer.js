@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, forwardRef, useImperativeHandle, useRef } from 'react'
 import Global from '../../global.js'
 import TodoColumnPresentational from './TodoColumnPresentational.js'
 
@@ -29,9 +29,10 @@ const MOCK_DATA = [
   },
 ];
 
-function TodoColumnContainer(props) {
+function TodoColumnContainer(props, ref) {
   const [state, setState] = useState(props.state);
   const [todosData, setTodosData] = useState([]);
+  const $dragEnterableColumn = useRef();
 
   useEffect(() => {
     // TODO: network logic, FIXME
@@ -39,6 +40,16 @@ function TodoColumnContainer(props) {
     const data = MOCK_DATA;
     setTodosData(data);
   }, []);
+
+
+  useImperativeHandle(
+    ref, () => ({
+      addTodo: (movedTodoData) => setTodosData([...todosData.map, movedTodoData]), // 향후 addTodo로 변경
+      deleteTodo: (todoId) => deleteTodo(todoId),
+      getColumn:() => $dragEnterableColumn.current
+    }),
+  )
+  // draggableCardRef
 
   const addTodo = () => {
     // TODO: UPDATE API
@@ -54,28 +65,10 @@ function TodoColumnContainer(props) {
     setTodosData([Global.getInitialTodoData(), ...todosData]);
   };
 
-  // 드래그
-  // const timeoutFunc = useRef();
-  // const debounced = (func, millisec) => {
-  //   if(timeoutFunc.current) clearTimeout(timeoutFunc.current)
-  //   timeoutFunc.current = setTimeout(() => {
-  //     console.log("fired", timeoutFunc.current)
-  //     console.log(func())
-  //   }, millisec);
-  // }
-   
-  // const dragover_handler = (ev) => {
-  //   console.log("dragover_handler", ev)
-  //   ev.preventDefault();
-    
-  //   ev.dataTransfer.dropEffect = "move"
-  //   return false;
-  // }
-
-
   return (
     <TodoColumnPresentational
-      handleDragStart={props.handleDragStart} handleDragOver={props.handleDragOver} handleDragEnter={props.handleDragEnter} handleDragLeave={props.handleDragLeave} handleDrop={props.handleDrop} // 드래그
+      handleDragStart={props.handleDragStart} handleDragOver={props.handleDragOver} handleDragEnter={props.handleDragEnter} handleDragLeave={props.handleDragLeave} handleDrop={props.handleDrop} // 드래그 함수
+      $draggableCardRef={props.$draggableCardRef} $dragEnterableColumnRef={$dragEnterableColumn} // 드래그 ref
       handleClickAddBtn={handleClickAddBtn}
       dispatch={props.onDispatch}
       addTodo={addTodo}
@@ -86,4 +79,4 @@ function TodoColumnContainer(props) {
   );
 }
 
-export default TodoColumnContainer;
+export default forwardRef(TodoColumnContainer);
