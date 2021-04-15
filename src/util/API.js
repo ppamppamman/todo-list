@@ -33,7 +33,7 @@ const API = {
     column: async ({ columnData }) => {
       const resourcePath = `${Global.getServerUrl()}/${columnData.userId}/column`
       const res = await fetch(resourcePath, {
-        method: 'post',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -44,7 +44,7 @@ const API = {
     todo: async ({ todoData }) => {
       const resourcePath = `${Global.getServerUrl()}/todo`;
       const res = await fetch(resourcePath, {
-        method: 'post',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -63,7 +63,7 @@ const API = {
     todo: async ({ todoData }) => {
       const resourcePath = `${Global.getServerUrl()}/todo/${todoData.id}`;
       const res = await fetch(resourcePath, {
-        method: 'patch',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
