@@ -1,58 +1,52 @@
-import React, { useState, useEffect, useRef } from 'react'
-import Global from '../../global.js'
+import React, { useState, useEffect, useRef } from 'react';
+import Global from '../../global.js';
+import API from '../../util/API.js';
 import TodoColumnPresentational from './TodoColumnPresentational.js'
-
-const MOCK_DATA = [
-  {
-    id: 'Neis-1617897760488',
-    author: 'Neis',
-    title: 'TODO1',
-    content: 'Content1',
-    createTime: 1617897760488,
-    updateTime: null,
-  },
-  {
-    id: 'Neis-1617897760508',
-    author: 'Neis',
-    title: 'TODO2',
-    content: 'Content2, lo~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ng content',
-    createTime: 1617897760508,
-    updateTime: 1617897806951,
-  },
-  {
-    id: 'Neis-1617897765008',
-    author: 'Neis',
-    title: 'TODO2',
-    content: 'Content3',
-    createTime: 1617897765008,
-    updateTime: 1617898140149,
-  },
-];
 
 function TodoColumnContainer(props) {
   const [state, setState] = useState(props.state);
   const [todosData, setTodosData] = useState([]);
 
-  useEffect(() => {
-    // TODO: network logic, FIXME
-    // fetch(url, props.columnId...)
-    const data = MOCK_DATA;
-    setTodosData(data);
+  useEffect(async () => {
+    const fetchData = await API.get.todos({ columnId: state.id });
+    console.log(fetchData);
+    setTodosData([...fetchData]);
   }, []);
 
-  const addTodo = () => {
-    // TODO: UPDATE API
-    // TODO: Loading
+  const addTodo = async ({ todoData }) => {
+    const res = await API.post.todo({ todoData });
+    if (!res.success)
+      throw new Error('todo post fail');
+
+    const todoDataIdx = todosData.findIndex(data => data.id === todoData.id);
+    todosData.splice(todoDataIdx, 1, { ...todoData, id: res.id });
+    setTodosData([...todosData]);
   }
 
-  const deleteTodo = (todoId) => {
-    // TODO: DELETE API, Loading
+  const updateTodo = async ({ todoData }) => {
+    const res = await API.patch.todo({ todoData });
+    if (res.success)
+      throw new Error('todo patch fail');
+
+    // FIXME
+  }
+
+  const deleteTodo = async (todoId) => {
+    // TODO: Loading
+    const res = await API.delete.todo({ todoId });
+    if (!res.success)
+      throw new Error('todo delete fail');
+
     setTodosData(todosData.filter(data => data.id !== todoId));
   }
 
   const handleClickAddBtn = () => {
-    setTodosData([Global.getInitialTodoData(), ...todosData]);
+    setTodosData([Global.getInitialTodoData({ columnId: state.id }), ...todosData]);
   };
+
+  const handleClickDeleteBtn = () => {
+    // TODO
+  }
 
   // 드래그
   // const timeoutFunc = useRef();
@@ -63,7 +57,7 @@ function TodoColumnContainer(props) {
   //     console.log(func())
   //   }, millisec);
   // }
-   
+
   // const dragover_handler = (ev) => {
   //   console.log("dragover_handler", ev)
   //   ev.preventDefault();
@@ -79,6 +73,7 @@ function TodoColumnContainer(props) {
       handleClickAddBtn={handleClickAddBtn}
       dispatch={props.onDispatch}
       addTodo={addTodo}
+      updateTodo={updateTodo}
       deleteTodo={deleteTodo}
       title={state.title}
       todosData={todosData}

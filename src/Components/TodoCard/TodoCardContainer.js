@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Global from '../../global.js';
 import * as Action from '../../util/actions/card.js';
 import { TodoCardViewState } from './const.js';
 import TodoCardPresentational from './TodoCardPresentational.js';
@@ -63,31 +62,32 @@ function TodoCardContainer(props) {
       setState({ ...state, title: initialTitle, content: initialContent });
     else
       props.deleteTodo(state.id);
+
     // TODO: PopupMessage
   };
 
   const handleClickConfirmBtn = () => {
-    // TODO: loading, network logic
+    // TODO: loading
+  
     const isUpdate = state.createTime !== null;
     const currTime = new Date().valueOf();
     const newState = { ...state,
       createTime: state.createTime ?? currTime,
       updateTime: currTime
-    }
-    setState({...newState}) // exactly same with below code.
-    // setState({
-    //   ...state,
-    //   // id: `${Global.getUser()}-${currTime}`,
-    //   createTime: state.createTime ?? currTime,
-    //   updateTime: currTime
-    // });
+    };
+
+    if (isUpdate)
+      props.updateTodo({ todoData: newState });
+    else
+      props.addTodo({ todoData: newState });
+
+    setState({...newState});
     setViewState(TodoCardViewState.NORMAL);
     props.dispatch({ action: isUpdate ? Action.UPDATE_CARD : Action.ADD_CARD, ...newState });
   };
   
   const handleClickDeleteBtn = () => {
     // TODO: PopupMessage
-    // TODO: network logic
     props.deleteTodo(state.id);
     props.dispatch({ action: Action.DELETE_CARD, ...state });
   };

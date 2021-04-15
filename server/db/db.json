@@ -1,26 +1,59 @@
 {
+  "group": [
+    {
+      "id": "1",
+      "name": "groupA"
+    }
+  ],
   "user": [
     {
-      "id": "abc123",
-      "name": "Anonymous"
+      "id": "pp123",
+      "name": "ppamppam",
+      "groupId": "1"
+    },
+    {
+      "id": "ne123",
+      "name": "Neis",
+      "groupId": "1"
+    },
+    {
+      "id": "pd123",
+      "name": "Pengdori",
+      "groupId": "1"
     }
   ],
   "columns": [
     {
-      "userId": "abc123",
-      "title": "COLUMN TITLE FOR TEST 0",
-      "id": "Z4ZqREijrlqkd0ATsfZk4"
+      "id": "1",
+      "userId": "ne123",
+      "title": "schedule"
     },
     {
-      "userId": "abc123",
-      "title": "COLUMN TITLE FOR TEST 0",
-      "id": "fMg-r1q4-BwgZWSjvyVMW"
+      "id": "2",
+      "userId": "ne123",
+      "title": "progress"
     },
     {
-      "userId": "abc123",
-      "title": "COLUMN TITLE FOR TEST 0",
-      "id": "fF0_HwRngOpbNzdBw5sLl"
+      "id": "3",
+      "userId": "ne123",
+      "title": "complete"
+    },
+    {
+      "id": "4",
+      "userId": "ne123",
+      "title": "CodeSquade"
     }
   ],
-  "todos": []
+  "todos": [
+    {
+      "id": "bUwUaHjuqIwpfcVWDZSFD",
+      "columnId": "2",
+      "author": "Neis",
+      "title": "123",
+      "content": "5231234",
+      "createTime": 1618493370432,
+      "updateTime": 1618493370432
+    }
+  ],
+  "histories": []
 }
