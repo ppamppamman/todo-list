@@ -15,18 +15,25 @@ const API = {
       const res = await fetch(resourcePath);
       return res.json();
     },
-    todo: async ({ todoId }) => { /* TODO */ },
+    todo: async ({ todoId }) => {
+      // TODO
+    },
     todos: async ({ columnId }) => {
       const resourcePath = `${Global.getServerUrl()}/columns/${columnId}/todos`;
       const res = await fetch(resourcePath);
       return res.json();
     },
+    histories: async ({ userId }) => {
+      const resourcePath = `${Global.getServerUrl()}/${userId}/histories`;
+      const res = await fetch(resourcePath);
+      return res.json();
+    }
   },
   post: {
     column: async ({ columnData }) => {
       const resourcePath = `${Global.getServerUrl()}/${columnData.userId}/column`
       const res = await fetch(resourcePath, {
-        method: 'post',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -35,9 +42,28 @@ const API = {
       return res.json();
     },
     todo: async ({ todoData }) => {
-      const resourcePath = `${Global.getServerUrl()}/columns/${todoData.columnId}/todo`;
+      const resourcePath = `${Global.getServerUrl()}/todo`;
       const res = await fetch(resourcePath, {
-        method: 'post',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(todoData)
+      });
+      return res.json();
+    },
+    history: async ({ historyData }) => {
+      const resourcePath = `${Global.getServerUrl()}/history`;
+    }
+  },
+  patch: {
+    column: async ({ columnId }) => {
+      // TODO
+    },
+    todo: async ({ todoData }) => {
+      const resourcePath = `${Global.getServerUrl()}/todo/${todoData.id}`;
+      const res = await fetch(resourcePath, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -46,18 +72,16 @@ const API = {
       return res.json();
     },
   },
-  patch: {
-    column: async ({ columnId }) => { /* TODO */ },
-    todo: async ({ columnId }) => {
-  
-    },
-  },
   delete: {
-    deleteColumn: {
-
+    column: {
+      // TODO
     },
-    deleteTodo: {
-  
+    todo: async ({ todoData }) => {
+      const resourcePath = `${Global.getServerUrl()}/todo/${todoData.id}`;
+      const res = await fetch(resourcePath, {
+        method: 'delete'
+      });
+      return res.json();
     }
   }
 }

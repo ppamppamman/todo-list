@@ -1,5 +1,5 @@
-let USER = { id: 'abc123', name: 'Anonymous' };
-let SERVER_URL = 'http://localhost:3000';
+let USER = { id: 'ne123', name: 'Neis' };
+let SERVER_URL = 'http://localhost:3030';
 
 const Global = {
   setUser: (user) => { USER = user },
