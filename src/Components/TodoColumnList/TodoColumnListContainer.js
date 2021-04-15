@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import TodoColumnContainer from "../TodoColumn/TodoColumnContainer.js";
+import API from "../../util/API.js";
 
 const TodoColumnListContainer = ({ onDispatch }) => {
   const [draggableCard, setDraggableCard] = useState(null);
@@ -10,14 +11,23 @@ const TodoColumnListContainer = ({ onDispatch }) => {
     // TODO 네트워크 및 드래그앤 드랍
     // TEST
     // onDispatch({title: "todo.title", date:"todo.createDate", author:"todo.author", action:'DELETE', from:'complete'})
+    
+    // 
   }
 
-  const [columns, setColumns] = useState([ {title: 'schedule'}, {title: 'progress'}, {title: 'complete'} ]);
+  const [columns, setColumns] = useState([]);
   
-
   useEffect(() => {
-    // 서버로부터 컬럼 정보를 받는다. => setColumns 변환
-    handleDispatch();
+    const fetchData = async () => {
+      
+      const getColumns = await API.get.columns();
+      console.log(getColumns)
+      setColumns([...getColumns])  
+    }
+    fetchData();
+    
+    
+    
   }, []);
   
   

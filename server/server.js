@@ -2,6 +2,7 @@ const path = require('path');
 const { nanoid } = require('nanoid');
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 // DB
 const low = require('lowdb');
@@ -9,6 +10,7 @@ const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync(path.join(__dirname, 'db/db.json'));
 const db = low(adapter);
 
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 

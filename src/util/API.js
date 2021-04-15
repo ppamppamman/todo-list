@@ -35,7 +35,7 @@ const API = {
       return res.json();
     },
     todo: async ({ todoData }) => {
-      const resourcePath = `${Global.getServerUrl()}/columns/${todoDate.columnId}/todo`;
+      const resourcePath = `${Global.getServerUrl()}/columns/${todoData.columnId}/todo`;
       const res = await fetch(resourcePath, {
         method: 'post',
         headers: {
