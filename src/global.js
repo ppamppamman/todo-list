@@ -6,10 +6,11 @@ const Global = {
   getUser: () => USER,
   setServerUrl: (serverUrl) => { SERVER_URL = serverUrl },
   getServerUrl: () => SERVER_URL,
-  getInitialTodoData: () => { // TODO: right located?
+  getInitialTodoData: ({ columnId }) => { // TODO: right located?
     return {
       id: Global.generateChildId(),
-      author: Global.getUser(),
+      columnId,
+      author: Global.getUser().name,
       title: '',
       content: '',
       createTime: null,

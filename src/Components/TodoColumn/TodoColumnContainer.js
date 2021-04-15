@@ -24,18 +24,35 @@ function TodoColumnContainer(props, ref) {
   )
   // draggableCardRef
 
-  const addTodo = () => {
-    // TODO: UPDATE API
-    // TODO: Loading
+  const addTodo = async ({ todoData }) => {
+    const res = await API.post.todo({ todoData });
+    if (!res.success)
+      throw new Error('todo post fail');
+
+    const todoDataIdx = todosData.findIndex(data => data.id === todoData.id);
+    todosData.splice(todoDataIdx, 1, { ...todoData, id: res.id });
+    setTodosData([...todosData]);
   }
 
-  const deleteTodo = (todoId) => {
+  const updateTodo = async ({ todoData }) => {
+    const res = await API.patch.todo({ todoData });
+    if (res.success)
+      throw new Error('todo patch fail');
+
+    // FIXME
+  }
+
+
+  const deleteTodo = async (todoId) => {
     // TODO: Loading
+    const res = await API.delete.todo({ todoId });
+    if (!res.success)
+      throw new Error('todo delete fail');
     setTodosData(todosData.filter(data => data.id !== todoId));
   }
 
   const handleClickAddBtn = () => {
-    setTodosData([Global.getInitialTodoData(), ...todosData]);
+    setTodosData([Global.getInitialTodoData({ columnId: state.id }), ...todosData]);
   };
 
   const handleClickDeleteBtn = () => {
@@ -48,6 +65,8 @@ function TodoColumnContainer(props, ref) {
       $draggableCardRef={props.$draggableCardRef} $dragEnterableColumnRef={$dragEnterableColumn} // 드래그 ref
       handleClickAddBtn={handleClickAddBtn}
       dispatch={props.onDispatch}
+      addTodo={addTodo}
+      updateTodo={updateTodo}
       deleteTodo={deleteTodo}
       title={state.title}
       todosData={todosData}

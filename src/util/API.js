@@ -3,7 +3,9 @@ import Global from '../global.js';
 const API = {
   get: {
     userName: async ({ userId }) => {
-      // TODO: return nickname
+      const resourcePath = `${Global.getServerUrl()}/login/${userId}`;
+      const res = await fetch(resourcePath);
+      return res.json();
     },
     column: async ({ columnId }) => {
       const resourcePath = `${Global.getServerUrl()}/columns/${columnId}`;
@@ -54,6 +56,14 @@ const API = {
     },
     history: async ({ historyData }) => {
       const resourcePath = `${Global.getServerUrl()}/history`;
+      const res = await fetch(resourcePath, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(historyData)
+      });
+      return res.json();
     }
   },
   patch: {
@@ -73,11 +83,11 @@ const API = {
     },
   },
   delete: {
-    column: {
+    column: async ({ columnId }) => {
       // TODO
     },
-    todo: async ({ todoData }) => {
-      const resourcePath = `${Global.getServerUrl()}/todo/${todoData.id}`;
+    todo: async ({ todoId }) => {
+      const resourcePath = `${Global.getServerUrl()}/todo/${todoId}`;
       const res = await fetch(resourcePath, {
         method: 'delete'
       });

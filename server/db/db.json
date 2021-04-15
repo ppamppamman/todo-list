@@ -102,31 +102,35 @@
       "updateDate": 1617898140149
     },
     {
-      "id": "Neis-16178956845631247760488",
-      "columnId": "4",
-      "author": "Neis",
-      "title": "TODO1",
-      "content": "Content1",
-      "createDate": 1617897760488,
-      "updateDate": null
+      "id": "1",
+      "userId": "ne123",
+      "title": "schedule"
     },
     {
-      "id": "Neis-1612367897765008",
-      "columnId": "4",
-      "author": "Neis",
-      "title": "TODO2",
-      "content": "Content3",
-      "createDate": 1617897765008,
-      "updateDate": 1617898140149
+      "id": "2",
+      "userId": "ne123",
+      "title": "progress"
     },
     {
-      "id": "Neis-161789568456312sfxgsdrt47760488",
-      "columnId": "4",
+      "id": "3",
+      "userId": "ne123",
+      "title": "complete"
+    },
+    {
+      "id": "4",
+      "userId": "ne123",
+      "title": "CodeSquade"
+    }
+  ],
+  "todos": [
+    {
+      "id": "bUwUaHjuqIwpfcVWDZSFD",
+      "columnId": "2",
       "author": "Neis",
-      "title": "TODO1",
-      "content": "Content1",
-      "createDate": 1617897760488,
-      "updateDate": null
+      "title": "123",
+      "content": "5231234",
+      "createTime": 1618493370432,
+      "updateTime": 1618493370432
     }
   ],
   "histories": []

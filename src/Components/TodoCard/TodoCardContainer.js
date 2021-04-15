@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Global from '../../global.js';
 import * as Action from '../../util/actions/card.js';
 import API from '../../util/API.js';
 import { TodoCardViewState } from './const.js';
@@ -68,11 +67,12 @@ function TodoCardContainer(props) {
     // TODO: PopupMessage
   };
 
-  const handleClickConfirmBtn = async () => {
+  const handleClickConfirmBtn = () => {
     // TODO: loading
-    const res = await API.patch.todo({ todoData: state });
-    if (!res.json.success)
-      throw new Error('todo patch fail');
+  
+    // const res = await API.patch.todo({ todoData: state });
+    // if (!res.json.success)
+    //   throw new Error('todo patch fail');
 
     const isUpdate = state.createTime !== null;
     const currTime = new Date().valueOf();
@@ -81,6 +81,11 @@ function TodoCardContainer(props) {
       updateTime: currTime
     };
 
+    if (isUpdate)
+      props.updateTodo({ todoData: newState });
+    else
+      props.addTodo({ todoData: newState });
+
     setState({...newState});
     setViewState(TodoCardViewState.NORMAL);
     props.dispatch({ action: isUpdate ? Action.UPDATE_CARD : Action.ADD_CARD, ...newState });
@@ -88,9 +93,10 @@ function TodoCardContainer(props) {
   
   const handleClickDeleteBtn = async () => {
     // TODO: PopupMessage
-    const res = await API.delete.todo({ todoData: state });
-    if (!res.json.success)
-      throw new Error('todo delete fail');
+
+    // const res = await API.delete.todo({ todoData: state });
+    // if (!res.json.success)
+    //   throw new Error('todo delete fail');
 
     props.deleteTodo(state.id);
     props.dispatch({ action: Action.DELETE_CARD, ...state });
