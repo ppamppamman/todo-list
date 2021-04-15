@@ -1,0 +1,59 @@
+{
+  "group": [
+    {
+      "id": "1",
+      "name": "groupA"
+    }
+  ],
+  "user": [
+    {
+      "id": "pp123",
+      "name": "ppamppam",
+      "groupId": "1"
+    },
+    {
+      "id": "ne123",
+      "name": "Neis",
+      "groupId": "1"
+    },
+    {
+      "id": "pd123",
+      "name": "Pengdori",
+      "groupId": "1"
+    }
+  ],
+  "columns": [
+    {
+      "id": "1",
+      "userId": "ne123",
+      "title": "schedule"
+    },
+    {
+      "id": "2",
+      "userId": "ne123",
+      "title": "progress"
+    },
+    {
+      "id": "3",
+      "userId": "ne123",
+      "title": "complete"
+    },
+    {
+      "id": "4",
+      "userId": "ne123",
+      "title": "CodeSquade"
+    }
+  ],
+  "todos": [
+    {
+      "id": "bUwUaHjuqIwpfcVWDZSFD",
+      "columnId": "2",
+      "author": "Neis",
+      "title": "123",
+      "content": "5231234",
+      "createTime": 1618493370432,
+      "updateTime": 1618493370432
+    }
+  ],
+  "histories": []
+}
