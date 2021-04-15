@@ -9,7 +9,6 @@ function TodoColumnPresentational(props) {
       <TodoCardContainer
         key={data.id}
         dispatch={props.dispatch}
-        addTodo={props.addTodo}
         deleteTodo={props.deleteTodo}
         viewState={data.createTime ? TodoCardViewState.NORMAL : TodoCardViewState.EDIT}
         handleDragStart={props.handleDragStart}  // 드래그
