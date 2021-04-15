@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import SideNavigatorPresentational from "./SideNavigatorPresentational";
 
 const SideNavigatorContainer = ({ todoHistory }) => {
-  const { mode, setMode, play, handleClick } = useHeaderContainer();
+  const {
+    mode,
+    setMode,
+    play,
+    count,
+    setCount,
+    handleClick,
+  } = useHeaderContainer();
 
   return (
     <Box>
@@ -18,6 +25,8 @@ const SideNavigatorContainer = ({ todoHistory }) => {
           todoHistory={todoHistory}
           mode={mode}
           setMode={setMode}
+          count={count}
+          setCount={setCount}
         ></SideNavigatorPresentational>
       )}
     </Box>
@@ -27,9 +36,11 @@ const SideNavigatorContainer = ({ todoHistory }) => {
 const useHeaderContainer = () => {
   const [mode, setMode] = useState(false);
   const [play, setPlay] = useState(false);
+  const [count, setCount] = useState(0);
   const handleClick = () => {
     setMode((prevMode) => !prevMode);
     setPlay(true);
+    setCount(count + 1);
   };
 
   return {
@@ -37,13 +48,15 @@ const useHeaderContainer = () => {
     setMode,
     play,
     setPlay,
+    count,
+    setCount,
     handleClick,
   };
 };
 
 const Box = styled.div`
   padding: 5% 0;
-  width: 10%;
+  width: 350px;
   box-sizing: border-box;
 `;
 
