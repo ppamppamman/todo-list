@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import * as actions from "../../../util/actions/card";
 
@@ -48,7 +48,10 @@ const HistoryCard = ({ title, updateTime, author, action, from, to, mode }) => {
       (today.getTime() - inputTime.getTime()) / 1000 / 60
     );
 
-    if (mode) setInterval(() => setCount(count + 1));
+    if (mode)
+      setInterval(() => {
+        setCount(count + 1);
+      }, 1000);
 
     return betweenTime < 1 ? "1분전" : `${betweenTime}분전`;
   };

@@ -33,6 +33,7 @@ function SideNavigator({ todoHistory, mode, setMode }) {
               action={action}
               from={from}
               to={to}
+              mode={mode}
             />
           );
         })}
