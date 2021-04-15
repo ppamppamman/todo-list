@@ -50,17 +50,17 @@ const HistoryCard = ({
 
   const timeForToday = (time) => {
     const today = new Date();
-    const inputTime = new Date(time); // date 나오고
+    const inputTime = new Date(time);
     const betweenTime = Math.floor(
       (today.getTime() - inputTime.getTime()) / 1000
     );
-    return betweenTime < 1 ? "1초전" : `${betweenTime}초전`;
+    return betweenTime < 1 ? "1분전" : `${betweenTime}분전`;
   };
 
-  const getTime = (action, createTime, updateTime, makeTime) => {
+  const getTime = (action, createTime, updateTime, makeTime, to) => {
     switch (action) {
       case actions.MOVE_CARD:
-        return;
+        return timeForToday(to);
 
       case actions.UPDATE_CARD:
         return timeForToday(updateTime);
@@ -79,7 +79,9 @@ const HistoryCard = ({
       <Content>
         <Name>{"@PNP"}</Name>
         <Text>{getText(title, action, from, to)}</Text>
-        <Time>{getTime(action, createTime, updateTime, makeTime)}</Time>
+        <Time>
+          {getTime(action, createTime, updateTime, makeTime, from, to)}
+        </Time>
       </Content>
     </Card>
   );
