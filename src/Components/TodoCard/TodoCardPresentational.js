@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import styled from 'styled-components';
 
 import { TodoCardViewState } from './const.js';
 import PopupMessageContainer from '../PopupMessage/PopupMessageContainer.js';
 
 function TodoCardPresentational(props) {
+  const $draggableCardRef = useRef();
   const renderDeletePopup = () => {
     return (
       <PopupMessageContainer
@@ -50,11 +51,8 @@ function TodoCardPresentational(props) {
   const isEditMode = () => props.viewState === TodoCardViewState.EDIT;
 
   return (
-    <Card
-      className={props.viewState}
-      onDoubleClickCapture={props.handleDoubleClickCapture} 
-      draggable={"true"}
-      onDragStart={props.handleDragStart} >  {/*드래그 테스트*/}
+    <Card className={props.viewState} onDoubleClickCapture={props.handleDoubleClickCapture} // $draggableCardRef.current
+      onMouseDown={(e) => {props.handleDragStart(e, props.state)}} onMouseUp={props.handleMouseUp} ref={$draggableCardRef}> {/* 드래그 */}
       <Title
         ref={props.titleRef}
         onChange={props.handleChangeTitle}

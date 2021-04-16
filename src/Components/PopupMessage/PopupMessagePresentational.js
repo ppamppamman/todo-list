@@ -21,7 +21,7 @@ const PopupMessagePresentational = ({
         <LoginInput ref={getName} type="text" placeholder="ID를 입력하세요." />
       </Login>
     ) : (
-      <div>`${"props들어갈자리"}를 삭제하시겠습니까?`</div>
+      <div>`삭제하시겠습니까?`</div>
     );
   };
 

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as Action from '../../util/actions/card.js';
+import API from '../../util/API.js';
 import { TodoCardViewState } from './const.js';
 import TodoCardPresentational from './TodoCardPresentational.js';
 
@@ -71,6 +72,10 @@ function TodoCardContainer(props) {
     // FIXME: move to TodoColumn?
     // TODO: loading
   
+    // const res = await API.patch.todo({ todoData: state });
+    // if (!res.json.success)
+    //   throw new Error('todo patch fail');
+
     const isUpdate = state.createTime !== null;
     const currTime = new Date().valueOf();
     const newState = { ...state,
@@ -125,7 +130,7 @@ function TodoCardContainer(props) {
       handleClickDeletePopupCancelBtn={handleClickDeletePopupCancelBtn}
       handleMouseOverDeleteBtn={handleMouseOverDeleteBtn}
       handleMouseLeaveDeleteBtn={handleMouseLeaveDeleteBtn}
-      draggable={true} handleDragStart={props.handleDragStart} // 드래그 테스트
+      handleMouseUp={props.handleMouseUp} handleDragStart={props.handleDragStart} $draggableCardRef={props.$draggableCardRef} // 드래그 
       deletePopup={deletePopup}
       state={state}
       viewState={viewState}
