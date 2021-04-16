@@ -13,18 +13,6 @@ const SideNavigatorContainer = ({ todoHistory }) => {
     setCount,
     handleClick,
   } = useHeaderContainer();
-
-  const [todo, setTodo] = useState(todoHistory);
-
-  const addHistory = async ({ todoHistory }) => {
-    const res = await API.post.history({ todoHistory });
-    if (!res.success) throw new Error("history post fail");
-    console.log(res);
-  };
-  useEffect(() => {
-    addHistory(todoHistory);
-  }, [todoHistory]);
-
   return (
     <Box>
       <NavigationInput
