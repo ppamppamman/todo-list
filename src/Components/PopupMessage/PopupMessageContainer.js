@@ -5,7 +5,10 @@ const PopupMessageContainer = (props) => {
   return (
     <div>
       <PopupMessagePresentational
+        mode={true}
         handleConfirmBtn={props.handleConfirmBtn}
+        popupType={props.popupType}
+        setPopupType={props.setPopupType}
       />
     </div>
   );
