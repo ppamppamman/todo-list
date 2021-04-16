@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get('/login/:userId', (req, res) => {
-  res.json({ userName: db.get('user').find({ id: res.params.userId }).value() });
+  res.json(db.get('user').find({ id: req.params.userId }).value());
 });
 
 // TODO: post user
@@ -25,7 +25,6 @@ app.get('/login/:userId', (req, res) => {
 app.get('/:userId/columns', (req, res) => {
   res.json(db.get('columns').filter({ userId: req.params.userId}).value());
 });
-
 
 app.post('/:userId/column', (req, res) => {
   req.body.id = nanoid();
