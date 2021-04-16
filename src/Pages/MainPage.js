@@ -6,6 +6,7 @@ import useDispatch from "../util/hooks/useDispatch";
 import HeaderContainer from "../Components/Header/HeaderContainer";
 import TodoColumnListContainer from "../Components/TodoColumnList/TodoColumnListContainer";
 import SideNavigatorContainer from "../Components/SideNavigator/SideNavigatorContainer";
+import PopupMessageContainer from "../Components/PopupMessage/PopupMessageContainer";
 
 // import reducer from '../util/reducer';
 
@@ -16,6 +17,18 @@ import SideNavigatorContainer from "../Components/SideNavigator/SideNavigatorCon
 const MainPage = () => {
   const [todoHistory, setTodoHistory] = useState([]);
   const [events, handleDispatch] = useDispatch();
+  const [popupType, setPopupType] = useState(true);
+  const [loginPopup, setLoginPopup] = useState(true);
+
+  const handleLoginPopupButton = (userID) => {
+    // todo API GET username
+    console.log(userID);
+    setLoginPopup(false);
+  };
+
+  const handleLoginPopupCancelBtn = () => {
+    setLoginPopup(false);
+  };
 
   useEffect(() => {
     setTodoHistory(events);
@@ -31,6 +44,14 @@ const MainPage = () => {
         />
       </Box>
       <TodoColumnListContainer onDispatch={handleDispatch} />
+      {loginPopup ? (
+        <PopupMessageContainer
+          popupType={popupType}
+          setPopupType={setPopupType}
+          handleCancelBtn={handleLoginPopupCancelBtn}
+          handleConfirmBtn={handleLoginPopupButton}
+        />
+      ) : null}
     </MainLayout>
   );
 };
@@ -48,7 +69,7 @@ const Responsive = styled.div`
 const MainLayout = styled(Responsive)`
   width: 100%;
 
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
 `;
 
