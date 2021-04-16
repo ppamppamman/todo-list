@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
-const PopupMessage = () => {
+const PopupMessagePresentational = (props) => {
   // login or delete 나누기
   const [login, setLogin] = useState(true);
   const [show, setShow] = useState(true);
@@ -32,10 +32,6 @@ const PopupMessage = () => {
     handleModalClose();
   };
 
-  const setDeleteCallBack = () => {
-    // 여기서 callBack으로 삭제했다는 값을 보내주면된다.
-  };
-
   const getButton = (login) => {
     return login ? (
       <div>
@@ -44,7 +40,7 @@ const PopupMessage = () => {
     ) : (
       <div>
         <CancelButton onClick={handleModalClose}>Cancel</CancelButton>
-        <DeleteButton onClick={setDeleteCallBack}>Delete</DeleteButton>
+        <DeleteButton onClick={props.handleConfirmBtn}>Delete</DeleteButton>
       </div>
     );
   };
@@ -111,4 +107,4 @@ const Modal_card = styled.div`
   border-radius: 5px;
 `;
 
-export default PopupMessage;
+export default PopupMessagePresentational;

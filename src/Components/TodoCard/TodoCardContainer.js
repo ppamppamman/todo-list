@@ -11,6 +11,7 @@ function TodoCardContainer(props) {
   const contentRef = useRef();
   const [initialTitle] = useState(state.title);
   const [initialContent] = useState(state.content);
+  const [deletePopup,  setDeletePopup] = useState(false);
 
   useEffect(() => {
     if (viewState === TodoCardViewState.EDIT && $currFocus) {
@@ -67,6 +68,7 @@ function TodoCardContainer(props) {
   };
 
   const handleClickConfirmBtn = () => {
+    // FIXME: move to TodoColumn?
     // TODO: loading
   
     const isUpdate = state.createTime !== null;
@@ -85,11 +87,16 @@ function TodoCardContainer(props) {
     setViewState(TodoCardViewState.NORMAL);
     props.dispatch({ action: isUpdate ? Action.UPDATE_CARD : Action.ADD_CARD, ...newState });
   };
-  
-  const handleClickDeleteBtn = () => {
-    // TODO: PopupMessage
+
+  const handleClickDeletePopupConfirmBtn = () => {
+    setDeletePopup(false);
     props.deleteTodo(state.id);
     props.dispatch({ action: Action.DELETE_CARD, ...state });
+  }
+  
+  const handleClickDeleteBtn = () => {
+    // FIXME: move to TodoColumn?
+    setDeletePopup(true);
   };
 
   const handleMouseOverDeleteBtn = () => {
@@ -110,9 +117,11 @@ function TodoCardContainer(props) {
       handleClickCancelBtn={handleClickCancelBtn}
       handleClickConfirmBtn={handleClickConfirmBtn}
       handleClickDeleteBtn={handleClickDeleteBtn}
+      handleClickDeletePopupConfigmBtn={handleClickDeletePopupConfirmBtn}
       handleMouseOverDeleteBtn={handleMouseOverDeleteBtn}
       handleMouseLeaveDeleteBtn={handleMouseLeaveDeleteBtn}
       draggable={true} handleDragStart={props.handleDragStart} // 드래그 테스트
+      deletePopup={deletePopup}
       state={state}
       viewState={viewState}
     />

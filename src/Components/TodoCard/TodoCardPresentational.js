@@ -1,8 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { TodoCardViewState } from './const.js';
+import PopupMessageContainer from '../PopupMessage/PopupMessageContainer.js';
 
 function TodoCardPresentational(props) {
+  const renderDeletePopup = () => {
+    return (
+      <PopupMessageContainer
+        handleConfirmbtn={props.handleClickDeletePopupConfirmBtn}
+      />
+    )
+  }
+
   const renderNonEdit = () => {
     // TODO, FIXME
     return (
@@ -31,11 +40,15 @@ function TodoCardPresentational(props) {
     );
   }
 
+  const isDeletePopup = () => props.deletePopup;
   const isEditMode = () => props.viewState === TodoCardViewState.EDIT;
 
   return (
-    <Card className={props.viewState} onDoubleClickCapture={props.handleDoubleClickCapture} 
-      draggable={"true"} onDragStart={props.handleDragStart} >  {/*드래그 테스트*/}
+    <Card
+      className={props.viewState}
+      onDoubleClickCapture={props.handleDoubleClickCapture} 
+      draggable={"true"}
+      onDragStart={props.handleDragStart} >  {/*드래그 테스트*/}
       <Title
         ref={props.titleRef}
         onChange={props.handleChangeTitle}
@@ -53,6 +66,7 @@ function TodoCardPresentational(props) {
         value={props.state.content}
         disabled={isEditMode() ? false : true} />
       {isEditMode() ? renderEdit() : renderNonEdit()}
+      {isDeletePopup() ? renderDeletePopup() : null}
     </Card>
   );
 }

@@ -9,7 +9,7 @@ function TodoColumnContainer(props) {
 
   useEffect(async () => {
     const fetchData = await API.get.todos({ columnId: state.id });
-    console.log(fetchData);
+    // console.log(fetchData);
     setTodosData([...fetchData]);
   }, []);
 
