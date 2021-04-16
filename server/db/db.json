@@ -44,34 +44,31 @@
       "title": "CodeSquade"
     }
   ],
-  "todos": [
+  "todos": [],
+  "histories": [
     {
-      "id": "TUDDVflbI0cuKhJiZ93Eb",
-      "columnId": "3",
-      "author": "Neis",
-      "title": "1",
-      "content": "1",
-      "createTime": 1618495555979,
-      "updateTime": 1618495555979
+      "id": "fOY56xLlr7ylJkBWqHAw9"
     },
     {
-      "id": "wHkuaAQw4iK45DyzTNh3j",
-      "columnId": "1",
-      "author": "Neis",
-      "title": "네이스 바보",
-      "content": "멍청이",
-      "createTime": 1618495596785,
-      "updateTime": 1618495596785
+      "id": "B2EYumyZM7VQRJqqxYgeQ"
     },
     {
-      "id": "K8IJtVm-PfGMVo_O5mYXY",
-      "columnId": "2",
-      "author": "Neis",
-      "title": "12345",
-      "content": "1",
-      "createTime": 1618534894105,
-      "updateTime": 1618534898162
+      "id": "7yCpM_J9PbT7zP4bnkW_t"
+    },
+    {
+      "id": "ZLstHNdKh8Vf2g5RsyMVX"
+    },
+    {
+      "id": "qrLbA4ibtIdv8jWcUhlKi"
+    },
+    {
+      "id": "0dzhTehT7r5N-NGmtC9Bf"
+    },
+    {
+      "id": "HILMrfuUlTwusJNr5mXKF"
+    },
+    {
+      "id": "oSC3uJ-P9GqQgBuOqkGVW"
     }
-  ],
-  "histories": []
+  ]
 }

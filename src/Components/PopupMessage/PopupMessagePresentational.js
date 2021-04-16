@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const PopupMessagePresentational = (props) => {
   // login or delete 나누기
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(true ? true : false);
   const [show, setShow] = useState(true);
 
   const handleModalClose = () => setShow(false);
@@ -12,6 +12,7 @@ const PopupMessagePresentational = (props) => {
   const handleModalOpen = () => setShow(true);
 
   const getTitle = (login) => {
+    console.log(login);
     return login ? (
       <Login>
         <LoginInput
