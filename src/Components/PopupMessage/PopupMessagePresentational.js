@@ -1,63 +1,50 @@
 import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
-const PopupMessage = () => {
+const PopupMessagePresentational = ({
+  popupType,
+  handleConfirmBtn,
+  handleCancelBtn,
+}) => {
   // login or delete 나누기
-  const [login, setLogin] = useState(true);
-  const [show, setShow] = useState(true);
+  const [isLogin] = useState(popupType);
 
-  const handleModalClose = () => setShow(false);
+  const getName = useRef();
 
-  // x 버튼 눌렀을 시 handleModalOpen 함수를 실행시키면 됨.
-  const handleModalOpen = () => setShow(true);
+  const handleConfirm = () => {
+    handleConfirmBtn(getName.current.value);
+  };
 
-  const getTitle = (login) => {
-    return login ? (
+  const getTitle = (isLogin) => {
+    return isLogin ? (
       <Login>
-        <LoginInput
-          ref={name}
-          type="text"
-          placeholder="사용하실 닉네임을 작성하세요."
-        />
+        <LoginInput ref={getName} type="text" placeholder="ID를 입력하세요." />
       </Login>
     ) : (
-      <div>`${"props들어갈자리"}를 삭제하시겠습니까?`</div>
+      <div>`삭제하시겠습니까?`</div>
     );
   };
 
-  const name = useRef();
-  const setName = () => {
-    setLogin(true);
-    // 여기서 데이터베이스? 로 네임을 보내주는 작업을 해야한다.
-    handleModalClose();
-  };
-
-  const setDeleteCallBack = () => {
-    // 여기서 callBack으로 삭제했다는 값을 보내주면된다.
-  };
-
-  const getButton = (login) => {
-    return login ? (
+  const getButton = (isLogin) => {
+    return isLogin ? (
       <div>
-        <LoginButton onClick={setName}>O K</LoginButton>
+        <LoginButton onClick={handleConfirm}>O K</LoginButton>
       </div>
     ) : (
       <div>
-        <CancelButton onClick={handleModalClose}>Cancel</CancelButton>
-        <DeleteButton onClick={setDeleteCallBack}>Delete</DeleteButton>
+        <CancelButton onClick={handleCancelBtn}>Cancel</CancelButton>
+        <DeleteButton onClick={handleConfirmBtn}>Delete</DeleteButton>
       </div>
     );
   };
 
   return (
-    <div hidden={!show} mode={login}>
-      <Modal_background>
-        <Modal_card>
-          <ModalTitle>{getTitle(login)}</ModalTitle>
-          <ModalButton>{getButton(login)}</ModalButton>
-        </Modal_card>
-      </Modal_background>
-    </div>
+    <Modal_background>
+      <Modal_card>
+        <ModalTitle>{getTitle(isLogin)}</ModalTitle>
+        <ModalButton>{getButton(isLogin)}</ModalButton>
+      </Modal_card>
+    </Modal_background>
   );
 };
 
@@ -91,6 +78,7 @@ const DeleteButton = styled.button`
 `;
 
 const Modal_background = styled.div`
+  position: fixed;
   display: flex;
   z-index: 10;
   justify-content: center;
@@ -111,4 +99,4 @@ const Modal_card = styled.div`
   border-radius: 5px;
 `;
 
-export default PopupMessage;
+export default PopupMessagePresentational;

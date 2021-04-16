@@ -1,9 +1,21 @@
 import React, {useRef} from 'react';
 import styled from 'styled-components';
+
 import { TodoCardViewState } from './const.js';
+import PopupMessageContainer from '../PopupMessage/PopupMessageContainer.js';
 
 function TodoCardPresentational(props) {
   const $draggableCardRef = useRef();
+  const renderDeletePopup = () => {
+    return (
+      <PopupMessageContainer
+        popupType={false}
+        handleConfirmBtn={props.handleClickDeletePopupConfirmBtn}
+        handleCancelBtn={props.handleClickDeletePopupCancelBtn}
+      />
+    )
+  }
+
   const renderNonEdit = () => {
     // TODO, FIXME
     return (
@@ -12,8 +24,11 @@ function TodoCardPresentational(props) {
         <DeleteBtn
           onClick={props.handleClickDeleteBtn}
           onMouseOver={props.handleMouseOverDeleteBtn}
-          onMouseLeave={props.handleMouseLeaveDeleteBtn}>
-            X
+          onMouseLeave={props.handleMouseLeaveDeleteBtn}
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.5 11.25L0.75 10.5L5.25 6L0.75 1.5L1.5 0.75L6 5.25L10.5 0.75L11.25 1.5L6.75 6L11.25 10.5L10.5 11.25L6 6.75L1.5 11.25Z"/>
+          </svg>
         </DeleteBtn>
       </div>
     );
@@ -32,6 +47,7 @@ function TodoCardPresentational(props) {
     );
   }
 
+  const isDeletePopup = () => props.deletePopup;
   const isEditMode = () => props.viewState === TodoCardViewState.EDIT;
 
   return (
@@ -54,6 +70,7 @@ function TodoCardPresentational(props) {
         value={props.state.content}
         disabled={isEditMode() ? false : true} />
       {isEditMode() ? renderEdit() : renderNonEdit()}
+      {isDeletePopup() ? renderDeletePopup() : null}
     </Card>
   );
 }
@@ -73,32 +90,27 @@ const Card = styled.div`
   margin-top: 10px;
   user-select: none;
 
-  &:not(.edit, .delete):hover {
+  &:not(.edit, .delete):hover, &.drag-float {
     cursor: pointer;
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
-    /* backdrop-filter: blur(4px); */
   }
 
   &.edit {
     padding: 15px;
     border: 1px solid #0075DE;
-    box-shadow: 0px 1px 30px rgba(224, 224, 224, 0.3);
   }
 
   &.delete {
     padding: 15px;
     background-color: #FFEEEC;
     border: 1px solid #FF4343;
-    box-shadow: 0px 1px 30px rgba(224, 224, 224, 0.3);
-  }
-
-  &.drag-float {
-    // TODO
   }
 
   &.drag-origin {
-    // TODO
+    opacity: 0.4;
+    padding: 15px;
+    border: 1px solid #0075DE;
   }
 `;
 
@@ -205,20 +217,24 @@ const DeleteBtn = styled.button`
   position: absolute;
   top: 16px;
   right: 16px;
-  /* background: #828282; */
-  background:transparent;
+  background-color: transparent;
   border: none;
-  color: #828282; 
+  /* color: #828282;  */
+
+  svg {
+    fill: #828282;
+  }
 
   &:hover {
     top: 15px;
     right: 15px;
-    /* background: #FF4343; */
-    color: #FF4343; // FIXME: delete
-  }
 
-  &.drag-origin {
-    /* background: #828282; */
-    color: #828282; // FIXME: delete
+    svg {
+      fill: #FF4343;
+    }
   }
+`;
+
+const SvgImg = styled.img`
+
 `;

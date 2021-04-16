@@ -48,11 +48,9 @@ const TodoColumnListContainer = ({ onDispatch }) => {
   }
 
   const handleDropPurely = (cardState) => {
-    // console.log(dragEnterableColumn.current)
-    
     if (dragEnterableColumn.current) {
-      dragEnterableColumn.current.addTodo(cardState);
       beforeDragEnterableColumn.current.deleteTodo(cardState);
+      dragEnterableColumn.current.addTodo(cardState);
     }
   }
 
@@ -83,8 +81,9 @@ const TodoColumnListContainer = ({ onDispatch }) => {
   }
   const handleMouseUp = (e) => {
     console.log("mouseUp", clickCounter.current)
-    if (!mouseDownTracker.current || e.target !== e.currentTarget) return false;
     clearTimeout(mouseDownTracker.current);
+    if (!mouseDownTracker.current || e.target !== e.currentTarget) return false;
+    // clearTimeout(mouseDownTracker.current);
   }
 
   const handleDragStart = (e, $currentTarget, cardState)  => {

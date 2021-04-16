@@ -12,6 +12,7 @@ function TodoCardContainer(props) {
   const contentRef = useRef();
   const [initialTitle] = useState(state.title);
   const [initialContent] = useState(state.content);
+  const [deletePopup,  setDeletePopup] = useState(false);
 
   useEffect(() => {
     if (viewState === TodoCardViewState.EDIT && $currFocus) {
@@ -68,6 +69,7 @@ function TodoCardContainer(props) {
   };
 
   const handleClickConfirmBtn = () => {
+    // FIXME: move to TodoColumn?
     // TODO: loading
   
     // const res = await API.patch.todo({ todoData: state });
@@ -90,16 +92,20 @@ function TodoCardContainer(props) {
     setViewState(TodoCardViewState.NORMAL);
     props.dispatch({ action: isUpdate ? Action.UPDATE_CARD : Action.ADD_CARD, ...newState });
   };
-  
-  const handleClickDeleteBtn = async () => {
-    // TODO: PopupMessage
 
-    // const res = await API.delete.todo({ todoData: state });
-    // if (!res.json.success)
-    //   throw new Error('todo delete fail');
-
+  const handleClickDeletePopupConfirmBtn = () => {
+    setDeletePopup(false);
     props.deleteTodo(state.id);
     props.dispatch({ action: Action.DELETE_CARD, ...state });
+  }
+
+  const handleClickDeletePopupCancelBtn = () => {
+    setDeletePopup(false);
+  }
+  
+  const handleClickDeleteBtn = () => {
+    // FIXME: move to TodoColumn?
+    setDeletePopup(true);
   };
 
   const handleMouseOverDeleteBtn = () => {
@@ -120,9 +126,12 @@ function TodoCardContainer(props) {
       handleClickCancelBtn={handleClickCancelBtn}
       handleClickConfirmBtn={handleClickConfirmBtn}
       handleClickDeleteBtn={handleClickDeleteBtn}
+      handleClickDeletePopupConfirmBtn={handleClickDeletePopupConfirmBtn}
+      handleClickDeletePopupCancelBtn={handleClickDeletePopupCancelBtn}
       handleMouseOverDeleteBtn={handleMouseOverDeleteBtn}
       handleMouseLeaveDeleteBtn={handleMouseLeaveDeleteBtn}
       handleMouseUp={props.handleMouseUp} handleDragStart={props.handleDragStart} $draggableCardRef={props.$draggableCardRef} // 드래그 
+      deletePopup={deletePopup}
       state={state}
       viewState={viewState}
     />

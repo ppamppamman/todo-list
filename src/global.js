@@ -1,4 +1,4 @@
-let USER = { id: 'ne123', name: 'Neis' };
+let USER;
 let SERVER_URL = 'http://localhost:3030';
 
 const Global = {

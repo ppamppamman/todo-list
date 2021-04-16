@@ -1,10 +1,14 @@
 import React from "react";
 import PopupMessagePresentational from "./PopupMessagePresentational";
-const PopupMessageContainer = () => {
+const PopupMessageContainer = (props) => {
   // PopupMessageContainer로 props 받아서 PopupMessagePresentational로 넘겨주기
   return (
     <div>
-      <PopupMessagePresentational /> // props받기
+      <PopupMessagePresentational
+        handleConfirmBtn={props.handleConfirmBtn}
+        handleCancelBtn={props.handleCancelBtn}
+        popupType={props.popupType}
+      />
     </div>
   );
 };

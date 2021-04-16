@@ -11,7 +11,7 @@ function TodoColumnContainer(props, ref) {
 
   useEffect(async () => {
     const fetchData = await API.get.todos({ columnId: state.id });
-    console.log(fetchData);
+    // console.log(fetchData);
     setTodosData([...fetchData]);
     
   }, []);
@@ -33,21 +33,19 @@ function TodoColumnContainer(props, ref) {
 
   const addTodo = async ({ todoData }) => {
     const res = await API.post.todo({ todoData });
-    if (!res.success)
-      throw new Error('todo post fail');
+    if (!res.success) throw new Error("todo post fail");
 
-    const todoDataIdx = todosData.findIndex(data => data.id === todoData.id);
+    const todoDataIdx = todosData.findIndex((data) => data.id === todoData.id);
     todosData.splice(todoDataIdx, 1, { ...todoData, id: res.id });
     setTodosData([...todosData]);
-  }
+  };
 
   const updateTodo = async ({ todoData }) => {
     const res = await API.patch.todo({ todoData });
-    if (res.success)
-      throw new Error('todo patch fail');
+    if (!res.success) throw new Error("todo patch fail");
 
     // FIXME
-  }
+  };
 
 
   const deleteTodo = async (todoId) => {
@@ -59,12 +57,15 @@ function TodoColumnContainer(props, ref) {
   }
 
   const handleClickAddBtn = () => {
-    setTodosData([Global.getInitialTodoData({ columnId: state.id }), ...todosData]);
+    setTodosData([
+      Global.getInitialTodoData({ columnId: state.id }),
+      ...todosData,
+    ]);
   };
 
   const handleClickDeleteBtn = () => {
     // TODO
-  }
+  };
 
   return (
     <TodoColumnPresentational

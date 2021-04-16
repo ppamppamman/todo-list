@@ -24,8 +24,16 @@ function TodoColumnPresentational(props) {
       <TopBar>
         <Title>{props.title}</Title>
         <CardCnt>{props.todosData.length}</CardCnt>
-        <DeleteBtn>x</DeleteBtn>
-        <AddBtn onClick={props.handleClickAddBtn}>+</AddBtn>
+        <DeleteBtn>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.5 11.25L0.75 10.5L5.25 6L0.75 1.5L1.5 0.75L6 5.25L10.5 0.75L11.25 1.5L6.75 6L11.25 10.5L10.5 11.25L6 6.75L1.5 11.25Z"/>
+          </svg>
+        </DeleteBtn>
+        <AddBtn onClick={props.handleClickAddBtn}>
+          <svg width="12" height="12" viewBox="1 1 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0.105709 7.53033L0.105709 6.46967H6.46967V0.105713H7.53033V6.46967H13.8943V7.53033H7.53033V13.8943H6.46967V7.53033H0.105709Z"/>
+          </svg>
+        </AddBtn>
       </TopBar>
       {renderTodos(props.todosData)}
     </Column>
@@ -85,13 +93,16 @@ const AddBtn = styled.button`
   float: right;
   border: none;
   outline: none;
-  //background-color: #BDBDBD;
   background-color: transparent;
-  color: #BDBDBD;
+
+  svg {
+    fill: #BDBDBD;
+  }
 
   &:hover {
-    /* background-color: #0075DE; */
-    color: #0075DE;
+    svg {
+      fill: #0075DE;
+    }
   }
 `;
 
@@ -99,13 +110,16 @@ const DeleteBtn = styled.button`
   float: right;
   border: none;
   outline: none;
-  /* background-color: #BDBDBD; */
   background-color: transparent;
-  color: #BDBDBD;
+
+  svg {
+    fill: #BDBDBD;
+  }
 
   &:hover {
-    /* background-color: #FF4343; */
-    color: #FF4343;
+    svg {
+      fill: #FF4343;
+    }
   }
 `;
 
