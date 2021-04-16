@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
+import Global from '../global.js';
+import API from '../util/API.js';
 import useDispatch from "../util/hooks/useDispatch";
 
 import HeaderContainer from "../Components/Header/HeaderContainer";
@@ -20,9 +22,12 @@ const MainPage = () => {
   const [popupType, setPopupType] = useState(true);
   const [loginPopup, setLoginPopup] = useState(true);
 
-  const handleLoginPopupButton = (userID) => {
-    // todo API GET username
-    console.log(userID);
+  const handleLoginPopupButton = async (userId) => {
+    const res = await API.get.userName({ userId });
+    if (!res)
+      throw new Error('not registered ID');
+
+    Global.setUser(res);
     setLoginPopup(false);
   };
 
@@ -36,22 +41,27 @@ const MainPage = () => {
 
   return (
     <MainLayout className="main">
-      <Box>
-        <HeaderContainer />
-        <SideNavigatorContainer
-          todoHistory={todoHistory}
-          onDispatch={handleDispatch}
-        />
-      </Box>
-      <TodoColumnListContainer onDispatch={handleDispatch} />
-      {loginPopup ? (
-        <PopupMessageContainer
-          popupType={popupType}
-          setPopupType={setPopupType}
-          handleCancelBtn={handleLoginPopupCancelBtn}
-          handleConfirmBtn={handleLoginPopupButton}
-        />
-      ) : null}
+      {loginPopup ?
+        (
+          <PopupMessageContainer
+            popupType={popupType}
+            handleCancelBtn={handleLoginPopupCancelBtn}
+            handleConfirmBtn={handleLoginPopupButton}
+          />
+        ) :
+        (
+          <div>
+          <Box>
+            <HeaderContainer />
+            <SideNavigatorContainer
+              todoHistory={todoHistory}
+              onDispatch={handleDispatch}
+            />
+          </Box>
+          <TodoColumnListContainer onDispatch={handleDispatch} />
+          </div>
+        )
+      }
     </MainLayout>
   );
 };

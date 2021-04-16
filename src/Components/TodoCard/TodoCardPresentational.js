@@ -7,7 +7,9 @@ function TodoCardPresentational(props) {
   const renderDeletePopup = () => {
     return (
       <PopupMessageContainer
-        handleConfirmbtn={props.handleClickDeletePopupConfirmBtn}
+        popupType={false}
+        handleConfirmBtn={props.handleClickDeletePopupConfirmBtn}
+        handleCancelBtn={props.handleClickDeletePopupCancelBtn}
       />
     )
   }

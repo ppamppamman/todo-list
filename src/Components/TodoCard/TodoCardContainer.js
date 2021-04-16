@@ -93,6 +93,10 @@ function TodoCardContainer(props) {
     props.deleteTodo(state.id);
     props.dispatch({ action: Action.DELETE_CARD, ...state });
   }
+
+  const handleClickDeletePopupCancelBtn = () => {
+    setDeletePopup(false);
+  }
   
   const handleClickDeleteBtn = () => {
     // FIXME: move to TodoColumn?
@@ -117,7 +121,8 @@ function TodoCardContainer(props) {
       handleClickCancelBtn={handleClickCancelBtn}
       handleClickConfirmBtn={handleClickConfirmBtn}
       handleClickDeleteBtn={handleClickDeleteBtn}
-      handleClickDeletePopupConfigmBtn={handleClickDeletePopupConfirmBtn}
+      handleClickDeletePopupConfirmBtn={handleClickDeletePopupConfirmBtn}
+      handleClickDeletePopupCancelBtn={handleClickDeletePopupCancelBtn}
       handleMouseOverDeleteBtn={handleMouseOverDeleteBtn}
       handleMouseLeaveDeleteBtn={handleMouseLeaveDeleteBtn}
       draggable={true} handleDragStart={props.handleDragStart} // 드래그 테스트
