@@ -23,84 +23,6 @@
     }
   ],
   "columns": [
-    { "id": "1", "userId": "ne123", "title": "schedule" },
-    { "id": "2", "userId": "ne123", "title": "progress" },
-    { "id": "3", "userId": "ne123", "title": "complete" },
-    { "id": "4", "userId": "ne123", "title": "CodeSquade" }
-  ],
-  "todos": [
-    {
-      "id": "Neis-1617897760488",
-      "columnId": "1",
-      "author": "Neis",
-      "title": "TODO1",
-      "content": "Content1",
-      "createDate": 1617897760488,
-      "updateDate": null
-    },
-    {
-      "id": "Neis-1617897asfwqer760508",
-      "columnId": "1",
-      "author": "Neis",
-      "title": "TODO2",
-      "content": "Content2, lo~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ng content",
-      "createDate": 1617897760508,
-      "updateDate": 1617897806951
-    },
-    {
-      "id": "Neis-1617897dsfgb765008",
-      "columnId": "1",
-      "author": "Neis",
-      "title": "TODO2",
-      "content": "Content3",
-      "createDate": 1617897765008,
-      "updateDate": 1617898140149
-    },
-    {
-      "id": "Neis-1617897qwr760488",
-      "columnId": "2",
-      "author": "Neis",
-      "title": "TODO1",
-      "content": "Content1",
-      "createDate": 1617897760488,
-      "updateDate": null
-    },
-    {
-      "id": "Neis-1617897aqwerhy56760508",
-      "columnId": "2",
-      "author": "Neis",
-      "title": "TODO2",
-      "content": "Content2, lo~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ng content",
-      "createDate": 1617897760508,
-      "updateDate": 1617897806951
-    },
-    {
-      "id": "Neis-1617asdfgxcvb897765008",
-      "columnId": "2",
-      "author": "Neis",
-      "title": "TODO2",
-      "content": "Content3",
-      "createDate": 1617897765008,
-      "updateDate": 1617898140149
-    },
-    {
-      "id": "Neis-16178956845631247760488",
-      "columnId": "3",
-      "author": "Neis",
-      "title": "TODO1",
-      "content": "Content1",
-      "createDate": 1617897760488,
-      "updateDate": null
-    },
-    {
-      "id": "Neis-1612367897765008",
-      "columnId": "3",
-      "author": "Neis",
-      "title": "TODO2",
-      "content": "Content3",
-      "createDate": 1617897765008,
-      "updateDate": 1617898140149
-    },
     {
       "id": "1",
       "userId": "ne123",
@@ -131,6 +53,33 @@
       "content": "5231234",
       "createTime": 1618493370432,
       "updateTime": 1618493370432
+    },
+    {
+      "id": "B-flE8daoCBlXojXZUf3Q",
+      "columnId": "1",
+      "author": "Neis",
+      "title": "123",
+      "content": "123",
+      "createTime": 1618544582538,
+      "updateTime": 1618544582538
+    },
+    {
+      "id": "s0v_sd-QKmVc0aK-dcHut",
+      "columnId": "3",
+      "author": "Neis",
+      "title": "asdf",
+      "content": "asdf",
+      "createTime": 1618552794739,
+      "updateTime": 1618552794739
+    },
+    {
+      "id": "l8P50tOo948RddK3s9hYd",
+      "columnId": "4",
+      "author": "Neis",
+      "title": "q",
+      "content": "q",
+      "createTime": 1618552800930,
+      "updateTime": 1618552800930
     }
   ],
   "histories": []

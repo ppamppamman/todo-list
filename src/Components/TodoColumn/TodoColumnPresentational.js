@@ -14,13 +14,13 @@ function TodoColumnPresentational(props) {
         deleteTodo={props.deleteTodo}
         viewState={data.createTime ? TodoCardViewState.NORMAL : TodoCardViewState.EDIT}
         state={data}
-        handleDragStart={props.handleDragStart} $draggableCardRef={props.$draggableCardRef} // 드래그
+        handleMouseUp={props.handleMouseUp} handleDragStart={props.handleDragStart} $draggableCardRef={props.$draggableCardRef} // 드래그
       />);
   }
 
   return (
-    <Column className="droppable" ref={props.$dragEnterableColumn}>
-      {/* onDragOver={props.handleDragOver} onDragEnter={props.handleDragEnter} onDragLeave={props.handleDragLeave} onDrop={props.handleDrop}> 드래그 */}
+    <Column className="droppable" ref={props.$dragEnterableColumnRef} onMouseOver={props.handleMouseOver}>
+      {/* 드래그 */}
       <TopBar>
         <Title>{props.title}</Title>
         <CardCnt>{props.todosData.length}</CardCnt>
@@ -42,7 +42,7 @@ const Column = styled.div`
   display: inline-block;
   vertical-align: top;
   
-  z-index: 1;
+  z-index: 2;
   height: 1000px;
   padding: 20px;
   box-sizing: border-box;

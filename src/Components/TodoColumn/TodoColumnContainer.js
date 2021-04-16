@@ -13,16 +13,23 @@ function TodoColumnContainer(props, ref) {
     const fetchData = await API.get.todos({ columnId: state.id });
     console.log(fetchData);
     setTodosData([...fetchData]);
+    
   }, []);
 
   useImperativeHandle(
     ref, () => ({
-      addTodo: (movedTodoData) => setTodosData([...todosData.map, movedTodoData]), // 향후 addTodo로 변경
-      deleteTodo: (todoId) => deleteTodo(todoId),
-      getColumn:() => $dragEnterableColumn.current
+      addTodo: (movedTodoData) => {console.log(todosData); setTodosData([...todosData, movedTodoData])}, // 향후 addTodo로 변경
+      deleteTodo: (movedTodoData) => deleteTodo(movedTodoData.todoId),
+      getColumn:() => $dragEnterableColumn.current,
+      getColumnTodos:() => todosData,
+      getColumnXY:() => [$dragEnterableColumn.current.getBoundingClientRect().left+window.pageXOffset, $dragEnterableColumn.current.getBoundingClientRect().top+window.pageYOffset],
     }),
+    props.handleSetDragEnterableColumn(ref)
   )
   // draggableCardRef
+  const setDragEnterableColumn = () => {
+    // 엔터할 수 있도록 ref 변경
+  }
 
   const addTodo = async ({ todoData }) => {
     const res = await API.post.todo({ todoData });
@@ -62,6 +69,7 @@ function TodoColumnContainer(props, ref) {
   return (
     <TodoColumnPresentational
       handleDragStart={props.handleDragStart} handleDragOver={props.handleDragOver} handleDragEnter={props.handleDragEnter} handleDragLeave={props.handleDragLeave} handleDrop={props.handleDrop} // 드래그 함수
+      handleMouseUp={props.handleMouseUp} handleMouseOver={(e) => {console.log("handleMouseOver"); props.handleMouseOver(e);} }
       $draggableCardRef={props.$draggableCardRef} $dragEnterableColumnRef={$dragEnterableColumn} // 드래그 ref
       handleClickAddBtn={handleClickAddBtn}
       dispatch={props.onDispatch}

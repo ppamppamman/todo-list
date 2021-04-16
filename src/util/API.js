@@ -89,7 +89,7 @@ const API = {
     todo: async ({ todoId }) => {
       const resourcePath = `${Global.getServerUrl()}/todo/${todoId}`;
       const res = await fetch(resourcePath, {
-        method: 'delete'
+        method: 'DELETE'
       });
       return res.json();
     }

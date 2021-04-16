@@ -4,70 +4,121 @@ import styled from 'styled-components';
 import TodoColumnContainer from "../TodoColumn/TodoColumnContainer.js";
 import API from "../../util/API.js";
 
-const TodoColumnListContainer = ({ onDispatch }) => {
-  const [draggableCard, setDraggableCard] = useState(null);
-  const $draggableCard = useRef();
-  const dragEnterableColumn = useRef();
-  
-  const handleDispatch = () => {
-    // TODO 네트워크 및 드래그앤 드랍
-    // TEST
-    // onDispatch({title: "todo.title", date:"todo.createDate", author:"todo.author", action:'DELETE', from:'complete'})
-    
-    // 
-  }
+const IS_DOUBLE_CLICK = 2;
 
+const TodoColumnListContainer = ({ onDispatch }) => {
+  
+  const $draggableCard = useRef();
+  const mouseDownTracker = useRef();
+  
+  const $dragEnterableColumns = useRef([])
+  const dragEnterableColumn = useRef();
+  const beforeDragEnterableColumn = useRef();
+  const clickCounter = useRef(0);
+  
+  const handleSetDragEnterableColumn = (column) => {
+    // console.log("========", $dragEnterableColumns, column)
+    if ($dragEnterableColumns.current.includes(column)) return;
+    $dragEnterableColumns.current.push(column)
+  }
+  
   const [columns, setColumns] = useState([]);
   
   useEffect(() => {
     const fetchData = async () => {  
       const getColumns = await API.get.columns();
-      console.log(getColumns)
       setColumns([...getColumns])  
     }
     fetchData();
-    console.log("dragEnterableColumn", dragEnterableColumn.current)
-    console.log("$draggableCard", $draggableCard.current)
-  }, []);
+  }, [$dragEnterableColumns]);
   
-  const handleDropPurely = () => {
+  const handleMouseOver = (e) => {
+    // console.log("handleMouseOver", e)
+    // console.log(e.clientX, e.clientY)
+  }
+
+  const handleMouseOverWithMouseDown = (e) => {
+    const reversed = $dragEnterableColumns.current;
+    reversed.forEach((column) => {
+      if (e.clientX > column.current.getColumnXY()[0]) {
+        dragEnterableColumn.current = column.current;
+        return false;
+      }
+    })
+  }
+
+  const handleDropPurely = (cardState) => {
+    // console.log(dragEnterableColumn.current)
+    
     if (dragEnterableColumn.current) {
-      dragEnterableColumn.current.addTodo(draggableCard);
+      dragEnterableColumn.current.addTodo(cardState);
+      beforeDragEnterableColumn.current.deleteTodo(cardState);
     }
   }
 
-  const handleDragStartPurely = (ev) => {
-
+  const handleMouseDown = (e, cardState) => {
+    // 마우스 다운 트래커 = 클릭 시작 발생
+    console.log("// 마우스 다운 트래커 = 클릭 시작 발생", e.target)
+    const $currentTarget = e.currentTarget;
+    // if (e.target !== e.currentTarget) return false;
+    
+    // if 마우스 업이라면, 마우스 다운 트래커 clear
+    clickCounter.current += 1;
+    mouseDownTracker.current = setTimeout(() => {
+      // 사격 중지
+      clickCounter.current = 0;
+      clearTimeout(mouseDownTracker.current);
+      handleDragStart(e, $currentTarget, cardState);
+      e.preventDefault() // 더블클릭 제어권 박탈 
+      
+      const reversed = $dragEnterableColumns.current;
+      reversed.forEach((column) => {
+        if (e.clientX > column.current.getColumnXY()[0]) {
+          beforeDragEnterableColumn.current = column.current;
+          return false;
+        }
+      })
+      
+    }, 1000);
+  }
+  const handleMouseUp = (e) => {
+    console.log("mouseUp", clickCounter.current)
+    if (!mouseDownTracker.current || e.target !== e.currentTarget) return false;
+    clearTimeout(mouseDownTracker.current);
   }
 
-  const handleDragStart = (e)  => {
-    // 데이터 전달 객체에 대상 요소의 id를 추가합니다.
-    // ev.dataTransfer.setData("card/drag", ev.target.id);
-    // ev.dataTransfer.dropEffect = "move";
-    console.log("mouseDown", e.currentTarget, e.target)
-    e.target.style.width = `${e.target.offsetWidth}px`;
-    e.target.style.height = `${e.target.offsetHeight}px`;
-    e.target.style.position = 'absolute';
-    e.target.style.zIndex = '99';
-    e.currentTarget.addEventListener('mousedown', handleDragStart);
+  const handleDragStart = (e, $currentTarget, cardState)  => {
+  
+    console.log("드래그 스타트", $currentTarget)
+    const $clonedCurrentTarget = $currentTarget.cloneNode(true);
+    
+    $currentTarget.style.opacity = 0.5;
+    $clonedCurrentTarget.style.width = `${$currentTarget.offsetWidth}px`;
+    $clonedCurrentTarget.style.height = `${$currentTarget.offsetHeight}px`;
+    $clonedCurrentTarget.style.position = 'absolute';
+    $clonedCurrentTarget.style.zIndex = '2';
+    $clonedCurrentTarget.addEventListener('mousedown', handleMouseDown);
 
-    console.log(e.target)
-    document.body.append(e.target)
+    document.body.append($clonedCurrentTarget)
 
-    const moveAt = ( pageX, pageY) => {
-      e.target.style.left = pageX - e.target.offsetWidth / 2 + 'px';
-      e.target.style.top = pageY - e.target.offsetHeight / 2 + 'px';
+    const moveAt = (pageX, pageY) => {
+      $clonedCurrentTarget.style.left = pageX - $clonedCurrentTarget.offsetWidth / 2 + 'px';
+      $clonedCurrentTarget.style.top = pageY - $clonedCurrentTarget.offsetHeight / 2 + 'px';
     }
     moveAt(e.pageX, e.pageY);
 
     const onMouseMove = (e) => {
       moveAt(e.pageX, e.pageY);
+      handleMouseOverWithMouseDown(e);
     }
-    e.currentTarget.addEventListener('mousemove', onMouseMove);
-    e.currentTarget.onmouseup = () => {
-      console.log("mouseUp")
-      e.currentTarget.removeEventListener('mousemove', onMouseMove);
-      e.target.onmouseup = null;
+    $clonedCurrentTarget.addEventListener('mousemove', onMouseMove);
+    $clonedCurrentTarget.onmouseup = () => {
+      // console.log("컬럼컨테이너", $dragEnterableColumns)
+      handleDropPurely(cardState)
+      $clonedCurrentTarget.removeEventListener('mousemove', onMouseMove);
+      $clonedCurrentTarget.onmouseup = null;
+      $clonedCurrentTarget.remove();
+      $currentTarget.remove();
     };
     
   }
@@ -134,9 +185,11 @@ const TodoColumnListContainer = ({ onDispatch }) => {
   return (
     <TodoColumnContainerLayout>
       {columns.map((colName, i) => {
-        return <TodoColumnContainer state={colName} key={`${colName}-${i}`} ref={dragEnterableColumn} $draggableCardRef={$draggableCard}
+        
+        return <TodoColumnContainer state={colName} key={`${colName}-${i}`} ref={React.createRef()} $draggableCardRef={$draggableCard}
           onDispatch={onDispatch} 
-          handleDragStart={handleDragStart} handleDragOver={handleDragOver} handleDrop={handleDrop} handleDragEnter={handleDragEnter} handleDragLeave={handleDragLeave}
+          handleMouseUp={handleMouseUp} handleMouseOver={handleMouseOver} handleSetDragEnterableColumn={handleSetDragEnterableColumn}
+          handleDragStart={handleMouseDown} handleDragOver={handleDragOver} handleDrop={handleDrop} handleDragEnter={handleDragEnter} handleDragLeave={handleDragLeave}
         />;
       })}
     </TodoColumnContainerLayout>

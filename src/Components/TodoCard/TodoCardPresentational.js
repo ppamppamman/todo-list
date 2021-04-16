@@ -36,7 +36,7 @@ function TodoCardPresentational(props) {
 
   return (
     <Card className={props.viewState} onDoubleClickCapture={props.handleDoubleClickCapture} // $draggableCardRef.current
-      onMouseDown={props.handleDragStart} ref={$draggableCardRef}> {/* 드래그 */}
+      onMouseDown={(e) => {props.handleDragStart(e, props.state)}} onMouseUp={props.handleMouseUp} ref={$draggableCardRef}> {/* 드래그 */}
       <Title
         ref={props.titleRef}
         onChange={props.handleChangeTitle}
