@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import { TodoCardViewState } from './const.js';
 import PopupMessageContainer from '../PopupMessage/PopupMessageContainer.js';
 
@@ -22,8 +23,11 @@ function TodoCardPresentational(props) {
         <DeleteBtn
           onClick={props.handleClickDeleteBtn}
           onMouseOver={props.handleMouseOverDeleteBtn}
-          onMouseLeave={props.handleMouseLeaveDeleteBtn}>
-            X
+          onMouseLeave={props.handleMouseLeaveDeleteBtn}
+        >
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.5 11.25L0.75 10.5L5.25 6L0.75 1.5L1.5 0.75L6 5.25L10.5 0.75L11.25 1.5L6.75 6L11.25 10.5L10.5 11.25L6 6.75L1.5 11.25Z"/>
+          </svg>
         </DeleteBtn>
       </div>
     );
@@ -215,20 +219,24 @@ const DeleteBtn = styled.button`
   position: absolute;
   top: 16px;
   right: 16px;
-  /* background: #828282; */
-  background:transparent;
+  background-color: transparent;
   border: none;
-  color: #828282; 
+  /* color: #828282;  */
+
+  svg {
+    fill: #828282;
+  }
 
   &:hover {
     top: 15px;
     right: 15px;
-    /* background: #FF4343; */
-    color: #FF4343; // FIXME: delete
-  }
 
-  &.drag-origin {
-    /* background: #828282; */
-    color: #828282; // FIXME: delete
+    svg {
+      fill: #FF4343;
+    }
   }
+`;
+
+const SvgImg = styled.img`
+
 `;
