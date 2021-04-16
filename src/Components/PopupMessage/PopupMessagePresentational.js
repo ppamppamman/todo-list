@@ -5,6 +5,7 @@ const PopupMessagePresentational = ({
   popupType,
   handleConfirmBtn,
   handleCancelBtn,
+  popupMessage,
 }) => {
   // login or delete 나누기
   const [isLogin] = useState(popupType);
@@ -93,8 +94,8 @@ const Modal_background = styled.div`
 
 const Modal_card = styled.div`
   vertical-align: center;
-  width: 20%;
-  height: 20%;
+  width: 350px;
+  height: 200px;
   background-color: lightgray;
   border-radius: 5px;
 `;

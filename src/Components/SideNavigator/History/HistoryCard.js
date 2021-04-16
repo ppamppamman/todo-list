@@ -1,16 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import API from "../../../util/API";
 import * as actions from "../../../util/actions/card";
 
-const HistoryCard = ({ title, updateTime, author, action, from, to, mode }) => {
-  // const [count, setCount] = useState(null);
+const HistoryCard = ({
+  title,
+  updateTime,
+  author,
+  action,
+  to,
+  columnId,
+  mode,
+}) => {
+  console.log(columnId);
+  const [from, setFrom] = useState(null);
+
+  const getColumnTitle = async (columnId) => {
+    const res = await API.get.columns();
+    const column = res.filter((v) => v.id === columnId);
+    console.log(column);
+    return setFrom(column[0].title);
+  };
+  useEffect(() => {
+    getColumnTitle(columnId);
+  }, [from, columnId]);
 
   const getText = (title, action, from, to) => {
     switch (action) {
       case actions.MOVE_CARD:
         return (
           <div>
-            <BoldText>{title}</BoldText>를 <BoldText>{from}</BoldText>에서
+            <BoldText>{title}</BoldText>를 <BoldText>{from}</BoldText>
+            에서
             <BoldText>{to}</BoldText>로 이동하였습니다.
           </div>
         );
@@ -44,8 +65,6 @@ const HistoryCard = ({ title, updateTime, author, action, from, to, mode }) => {
   const getTimeGap = (updateTime, mode) => {
     const today = new Date();
     const inputTime = new Date(updateTime);
-    // const sec = Math.floor((today.getTime() - inputTime.getTime()) / 1000);
-    // 초
     const sec = new Date(today - inputTime).getSeconds();
     const minute = new Date(today - inputTime).getMinutes();
     const hour = today.getHours() - inputTime.getHours();

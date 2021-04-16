@@ -33,20 +33,26 @@ function SideNavigator({ todoHistory, mode, setMode, count, setCount }) {
       <div ref={repeatNavigatorView}>
         {[...todoHistory]
           .reverse()
-          .map(({ title, updateTime, author, action, from, to }, index) => {
-            return (
-              <HistoryCard
-                key={index}
-                updateTime={updateTime}
-                title={title}
-                author={author}
-                action={action}
-                from={from}
-                to={to}
-                mode={mode}
-              />
-            );
-          })}
+          .map(
+            (
+              { title, updateTime, author, action, from, to, columnId },
+              index
+            ) => {
+              console.log(columnId);
+              return (
+                <HistoryCard
+                  key={index}
+                  updateTime={updateTime}
+                  title={title}
+                  author={author}
+                  action={action}
+                  to={to}
+                  columnId={columnId}
+                  mode={mode}
+                />
+              );
+            }
+          )}
       </div>
     </Bar>
   );
